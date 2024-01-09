@@ -4,22 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-// use App\Http\Middleware\Admin;
+
 use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use Hash;
 
-
-// namespace App\Http\Controllers\Admin;
-
-// use App\Http\Controllers\Controller;
-// use App\Http\Middleware\Admin as AdminMiddleware;
-// use Illuminate\Http\Request;
-// use Auth;
-// use Validator;
-// use Hash;
-// use App\Models\Admin as AdminModel;
 
 
 
