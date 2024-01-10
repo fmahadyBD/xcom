@@ -78,6 +78,8 @@ class AdminController extends Controller
        }
 
 
+
+
        public function checkCurrentPassword(Request $request){
         $data=$request->all();
 
@@ -86,5 +88,44 @@ class AdminController extends Controller
         }else{
             return "false";
         }
+       }
+       public function updateDetails(Request $request){
+
+        if($request->isMethod('post')){
+            $data=$request->all();
+
+            echo"<pre>";print_r($data);
+
+
+            $rules=[
+
+                // 'admin_name'=>'required|alpha|max:255',
+                'admin_name'=>'required|regex:/^[\pL\s\-]+$/u|max:255',
+                //alpha will not accept the spaces
+                'admin_mobile'=>'required| numeric|max:13|min:11',
+                //digit
+                //13th tutorial
+            ];
+// search it in validation
+            $customMessages=[
+                'admin_name.required'=>"Name is requried",
+                'admin_name.regex'=>"Valid Name is requried",
+                // 'admin_name.alpha'=>'valied Name is required',
+                'admin_mobile.required'=>'Mobile is required',
+                'admin_mobile.numeric'=>'valied Mobile is required',
+                'admin_mobile.max'=>'Mobile number is not correct',
+                'admin_mobile.min'=>'valied Mobile is required',
+            ];
+            $this->validate($request,$rules,$customMessages);
+            //pdate Amdin Details
+
+            Admin::where('email',Auth::guard('admin')->user()->email)->update(['name'=>$data['admin_name'],'mobile'=>$data['admin_mobile']]);
+            return redirect()->back()->with('success_message','your new details hass been updated!');
+
+
+
+
+        }
+        return view('admin.update_details');
        }
 }
