@@ -10,7 +10,7 @@ use Auth;
 use Validator;
 use Hash;
 use image;
-
+// Sir this 'image' create the problem in this project. I 
 
 
 class AdminController extends Controller
