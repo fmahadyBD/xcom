@@ -133,7 +133,7 @@ class AdminController extends Controller
 
 
             //composer require intervention/image--> Done
-            
+
 
 
             // Uploading the  admin image
@@ -143,7 +143,7 @@ class AdminController extends Controller
                     // Get Image Extemsion
                     $extension=$image_tmp->getClientOriginalExtension();
                     //Ganerate new image name
-                    $imageName=rand(111,99999).''.$extension;
+                    $imageName=rand(111,99999).'.'.$extension;
                     $image_path='admin/images/photos'.$imageName;
                     Image::make($image_tmp)->save($image_path);
                 }
