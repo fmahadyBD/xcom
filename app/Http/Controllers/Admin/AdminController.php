@@ -9,14 +9,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use Hash;
-// use App\Http\Controllers\Admin\Image;
-// use Image;
-use Intervention\Image\Facades\Image;
-
-// use Intervention\Image\Facades\Image;
-
-// use Intervention\Image\Facades\Image;
-
+use image;
 
 
 
@@ -95,6 +88,10 @@ class AdminController extends Controller
             return "false";
         }
     }
+
+
+
+
     public function updateDetails(Request $request)
     {
 
@@ -128,7 +125,17 @@ class AdminController extends Controller
                 'admin_image.image' => 'valied Image is required',
             ];
             $this->validate($request, $rules, $customMessages);
-            // pdate Amdin Details
+
+
+            // update Amdin Details
+
+
+
+
+            //composer require intervention/image--> Done
+            
+
+
             // Uploading the  admin image
             if($request->hasFile('admin_image')){
                 $image_tmp=$request->file('admin_image');
@@ -141,27 +148,7 @@ class AdminController extends Controller
                     Image::make($image_tmp)->save($image_path);
                 }
 
-            // if($request->hasFile('admin_image')){
 
-            //     $image_tmp = $request->file('admin_image');
-            //      if($image_tmp->isValid()){
-            //     //Get Image Extension
-            //     $extension = $image_tmp->getClientOriginalExtension();
-            //      //Generate new image
-            //      $imageName = rand(111,99999).''.$extension; $image_path = 'admin/img'.$imageName;
-            //      Image::make($image_tmp)->save($image_path);
-
-            //      }
-            // }
-            // if ($request->hasFile('admin_image')) {
-            //     $image_tmp = $request->file('admin_image');
-            //     if ($image_tmp->isValid()) {
-            //         //get image extension
-            //         $extension = $image_tmp->getClientOriginalExtension();
-            //         $imageName = rand(111, 99999) . '.' . $extension;
-            //         $image_path = public_path('admin/img/' . $imageName);
-            //         Image::make($image_tmp)->save($image_path);
-            //     }
             }
 
             Admin::where('email', Auth::guard('admin')->user()->email)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile'],'image'=>$imageName]);
@@ -169,4 +156,7 @@ class AdminController extends Controller
         }
         return view('admin.update_details');
     }
+
+
+
 }
