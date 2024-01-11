@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 use Auth;
 use Validator;
 use Hash;
+// use App\Http\Controllers\Admin\Image;
+// use Image;
+use Intervention\Image\Facades\Image;
+
+// use Intervention\Image\Facades\Image;
+
+// use Intervention\Image\Facades\Image;
 
 
 
@@ -94,8 +101,8 @@ class AdminController extends Controller
         if ($request->isMethod('post')) {
             $data = $request->all();
 
-            echo "<pre>";
-            print_r($data);
+            // echo "<pre>";
+            // print_r($data);
 
 
             $rules = [
@@ -105,6 +112,7 @@ class AdminController extends Controller
                 //alpha will not accept the spaces
                 // 'admin_mobile' => 'required| numeric|max:11|min:10',
                 'admin_mobile' => 'required| numeric|digits:11',
+                'admin_image' => 'image',
                 //digit
                 //13th tutorial
             ];
@@ -117,11 +125,46 @@ class AdminController extends Controller
                 'admin_mobile.numeric' => 'valied Mobile is required',
                 'admin_mobile.max' => 'Mobile number is not correct',
                 'admin_mobile.min' => 'valied Mobile is required',
+                'admin_image.image' => 'valied Image is required',
             ];
             $this->validate($request, $rules, $customMessages);
-            //pdate Amdin Details
+            // pdate Amdin Details
+            // Uploading the  admin image
+            if($request->hasFile('admin_image')){
+                $image_tmp=$request->file('admin_image');
+                if($image_tmp->isValid()){
+                    // Get Image Extemsion
+                    $extension=$image_tmp->getClientOriginalExtension();
+                    //Ganerate new image name
+                    $imageName=rand(111,99999).''.$extension;
+                    $image_path='admin/images/photos'.$imageName;
+                    Image::make($image_tmp)->save($image_path);
+                }
 
-            Admin::where('email', Auth::guard('admin')->user()->email)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile']]);
+            // if($request->hasFile('admin_image')){
+
+            //     $image_tmp = $request->file('admin_image');
+            //      if($image_tmp->isValid()){
+            //     //Get Image Extension
+            //     $extension = $image_tmp->getClientOriginalExtension();
+            //      //Generate new image
+            //      $imageName = rand(111,99999).''.$extension; $image_path = 'admin/img'.$imageName;
+            //      Image::make($image_tmp)->save($image_path);
+
+            //      }
+            // }
+            // if ($request->hasFile('admin_image')) {
+            //     $image_tmp = $request->file('admin_image');
+            //     if ($image_tmp->isValid()) {
+            //         //get image extension
+            //         $extension = $image_tmp->getClientOriginalExtension();
+            //         $imageName = rand(111, 99999) . '.' . $extension;
+            //         $image_path = public_path('admin/img/' . $imageName);
+            //         Image::make($image_tmp)->save($image_path);
+            //     }
+            }
+
+            Admin::where('email', Auth::guard('admin')->user()->email)->update(['name' => $data['admin_name'], 'mobile' => $data['admin_mobile'],'image'=>$imageName]);
             return redirect()->back()->with('success_message', 'your new details hass been updated!');
         }
         return view('admin.update_details');

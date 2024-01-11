@@ -62,7 +62,9 @@
 
 
 
-                                <form method="post" action="{{ url('admin/update-details') }}">
+                                <form method="post" action="{{ url('admin/update-details') }}" enctype="multipart/form-data">
+
+                                    
                                     @csrf
                                     <div class="card-body">
                                         <div class="form-group">
@@ -87,6 +89,14 @@
                                             <input type="text" class="form-control" id="admin_mobile"
                                                 placeholder="Mobile" name="admin_mobile"
                                                 value="{{ Auth::guard('admin')->user()->mobile }}"
+                                                >
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="admin_image">Image</label>
+                                            <input type="file" class="form-control" id="admin_image"
+                                                name="admin_image"
+
                                                 >
 
                                         </div>
