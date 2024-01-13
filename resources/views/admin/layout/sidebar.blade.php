@@ -11,12 +11,24 @@
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+
                     <div class="image">
-                        <img src="{{ url('admin/images/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                            alt="User Image">
+                        @if (!empty(Auth::guard('admin')->user()->image))
+                            <img src="{{ asset(Auth::guard('admin')->user()->image) }}" class="img-circle elevation-2"
+                                alt="User Image">
+                        @else
+                            <img src="{{ url('admin/images/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                                alt="User Image">
+                        @endif
                     </div>
+
+
+
+
+
                     <div class="info">
-                        <a href="#" class="d-block">Mahady Hasan Fahim</a>
+                        <a href="#" class="d-block">{{ Auth::guard('admin')->user()->name }}</a>
                     </div>
                 </div>
 
@@ -38,24 +50,64 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            with font-awesome or any other icon font library -->
+
+                        @if (Session::get('page') == 'dashboard')
+                            @php $active="active" @endphp
+                        @else
+                            @php $active="" @endphp
+                        @endif
+                        <li class="nav-item">
+                            <a href="{{ url('admin/dashboard') }}" class="nav-link {{ $active }}">
+                                <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Dashboard
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                        {{-- if subheading clicked then heading heighliting --}}
+
+                        @if (Session::get('page') == 'updatepassword' || Session::get('page') == 'updatepassword')
+                            @php $active="active" @endphp
+                        @else
+                            @php $active="" @endphp
+                        @endif
+
+
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link {{ $active }}">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Settings
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+
+
+                                @if (Session::get('page') == 'updatepassword')
+                                    @php $active="active" @endphp
+                                @else
+                                    @php $active="" @endphp
+                                @endif
+
                                 <li class="nav-item">
-                                    <a href="{{ url('admin/update-password') }}" class="nav-link">
+                                    <a href="{{ url('admin/update-password') }}" class="nav-link {{ $active }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Update Admin Password</p>
                                     </a>
                                 </li>
+
+                                @if (Session::get('page') == 'updatedetails')
+                                    @php $active="active" @endphp
+                                @else
+                                    @php $active="" @endphp
+                                @endif
+
+
                                 <li class="nav-item">
-                                    <a href="{{ route('edit') }}" class="nav-link active">
+                                    <a href="{{ route('edit') }}" class="nav-link  {{ $active }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Update Admin Details</p>
                                     </a>
@@ -68,20 +120,14 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Widgets
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>
+
+
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
-                                    Layout Options
+                                    CMS Pages
                                     <i class="fas fa-angle-left right"></i>
                                     <span class="badge badge-info right">6</span>
                                 </p>

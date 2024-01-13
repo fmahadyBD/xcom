@@ -94,6 +94,11 @@
                                             <label for="admin_image">Image</label>
                                             <input type="file" class="form-control" id="admin_image" name="admin_image">
 
+                                            {{-- @if(!@empty(Auth::guard('admin')->user()->image))
+                                            <a href="{{url(admin/images/photos/.Auth::guard('admin')->user()->image)}}" target="_blank">View Photo</a>
+                                                <input type="hidden" name="crrent_image" value="{{Auth::guard('admin')->user()->image}}">
+                                           @elseif () --}}
+                                           
                                         </div>
 
                                     </div>

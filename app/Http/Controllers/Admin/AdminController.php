@@ -10,6 +10,9 @@ use Auth;
 use Validator;
 use Hash;
 use image;
+
+
+use Session;
 // Sir this 'image' create the problem in this project. I
 
 
@@ -17,10 +20,17 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
+        Session::put('page','dashboard');
+
+
         return view('admin.dashboard');
     }
     public function login(Request $request)
     {
+
+
+        Session::put('page','login');
+
         if ($request->isMethod('post')) {
             $data = $request->all();
             // echo"<pre>";print_r($data);
@@ -55,6 +65,10 @@ class AdminController extends Controller
     }
     public function updatePassword(Request $request)
     {
+
+        Session::put('page','updatepassword');
+
+
         if ($request->isMethod('post')) {
             $data = $request->all();
             //check if current password is correct
@@ -90,6 +104,8 @@ class AdminController extends Controller
     }
     public function edit(Request $request)
     {
+
+        Session::put('page','updatedetails');
         return view('admin.update_details');
 
     }
@@ -97,6 +113,9 @@ class AdminController extends Controller
 
     public function updateDetails(Request $request)
     {
+
+        Session::put('page','updatedetails');
+
         $rules = [
 
             // 'admin_name'=>'required|alpha|max:255',
