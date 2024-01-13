@@ -121,12 +121,13 @@ class AdminController extends Controller
             $admin = Auth::guard('admin')->user();
             $id = $admin->id;
             if ($admin) {
+
                 // Call the updateDetails method on the Admin model with the $id parameter
-                $admin->updateDetailsx($request, $id);
+                $admin->updateDetails($request, $id);
 
                 return redirect()->back()->with('success_message', 'true');
             }
-            //code link: https://github.com/fmahadyBD/xcom
+
         }
 
         return view('admin.update_details');

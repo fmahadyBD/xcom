@@ -30,7 +30,7 @@ class Admin extends Authenticatable
         self::$image->move(self::$directory, self::$imageName);
         return self::$directory . self::$imageName;
     }
-    public static function updateDetailsx($request, $id)
+    public static function updateDetails($request, $id)
     {
         self::$admin = Admin::find($id);
         if ($request->file('admin_image')) {
@@ -42,6 +42,7 @@ class Admin extends Authenticatable
             self::$imageUrl = self::$admin->image;
         }
         self::$admin->name = $request->admin_name;
+        self::$admin->mobile = $request->admin_mobile;
         //code link: https://github.com/fmahadyBD/xcom
 
         self::$admin->image = self::$imageUrl;
