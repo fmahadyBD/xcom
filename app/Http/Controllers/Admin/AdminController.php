@@ -126,6 +126,7 @@ class AdminController extends Controller
 
                 return redirect()->back()->with('success_message', 'true');
             }
+            //code link: https://github.com/fmahadyBD/xcom
         }
 
         return view('admin.update_details');

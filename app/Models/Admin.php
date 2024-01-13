@@ -42,7 +42,7 @@ class Admin extends Authenticatable
             self::$imageUrl = self::$admin->image;
         }
         self::$admin->name = $request->admin_name;
-
+        //code link: https://github.com/fmahadyBD/xcom
 
         self::$admin->image = self::$imageUrl;
 
