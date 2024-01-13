@@ -88,7 +88,11 @@ class AdminController extends Controller
             return "false";
         }
     }
+    public function edit(Request $request)
+    {
+        return view('admin.update_details');
 
+    }
 
 
     public function updateDetails(Request $request)
@@ -115,7 +119,7 @@ class AdminController extends Controller
             'admin_mobile.min' => 'valied Mobile is required',
             'admin_image.image' => 'valied Image is required',
         ];
-
+        // view('admin.update_details');
         $this->validate($request, $rules, $customMessages);
         if ($request->isMethod('post')) {
             $admin = Auth::guard('admin')->user();
@@ -123,13 +127,13 @@ class AdminController extends Controller
             if ($admin) {
 
                 // Call the updateDetails method on the Admin model with the $id parameter
-                $admin->updateDetails($request, $id);
+                $admin->updateDetailsx($request, $id);
 
-                return redirect()->back()->with('success_message', 'true');
+
             }
-
         }
+        return redirect()->back()->with('success_message', 'true');
 
-        return view('admin.update_details');
+
     }
 }

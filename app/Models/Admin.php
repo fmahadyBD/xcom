@@ -30,7 +30,7 @@ class Admin extends Authenticatable
         self::$image->move(self::$directory, self::$imageName);
         return self::$directory . self::$imageName;
     }
-    public static function updateDetails($request, $id)
+    public static function updateDetailsx($request, $id)
     {
         self::$admin = Admin::find($id);
         if ($request->file('admin_image')) {

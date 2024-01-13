@@ -1,22 +1,30 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
-Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function () {
+Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function(){
 
 
-    Route::match(['get', 'post'], 'login', 'AdminController@login');
+    Route::match(['get','post'],'login','AdminController@login') ;
 
-    Route::group(['middleware' => ['admin']], function () {
+    Route::group(['middleware'=>['admin']],function(){
+        Route::get('dashboard','AdminController@dashboard') ;
 
-        Route::get('dashboard', 'AdminController@dashboard');
-        Route::match(['get', 'post'], 'update-details', 'AdminController@updateDetails');
-        Route::match(['get', 'post'], 'update-password', 'AdminController@updatePassword');
-        Route::post('check-current-password', 'AdminController@checkCurrentPassword');
-        Route::get('logout', 'AdminController@logout');
+
+        // Route::match(['get','post'],'update-details','AdminController@updateDetails') ;
+        // Route::get(['get','post'],'update-details','AdminController@updateDetails') ;
+        Route::get('/edit/', [AdminController::class, 'edit'])->name('edit');
+        Route::post('/updateDetails/', [AdminController::class, 'updateDetails'])->name('updateDetails');
+
+
+        Route::match(['get','post'],'update-password','AdminController@updatePassword') ;
+        Route::post('check-current-password','AdminController@checkCurrentPassword') ;
+        Route::get('logout','AdminController@logout') ;
+
     });
 });

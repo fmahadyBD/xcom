@@ -55,7 +55,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('admin/update-details') }}" class="nav-link active">
+                                    <a href="{{ route('edit') }}" class="nav-link active">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Update Admin Details</p>
                                     </a>

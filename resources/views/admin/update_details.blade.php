@@ -62,7 +62,7 @@
 
 
 
-                                <form method="post" action="{{ url('admin/update-details') }}"
+                                <form method="post" action="{{ route('updateDetails') }}"
                                     enctype="multipart/form-data">
 
 
