@@ -68,12 +68,13 @@
                         </li>
                         {{-- if subheading clicked then heading heighliting --}}
 
+
+
                         @if (Session::get('page') == 'updatepassword' || Session::get('page') == 'updatepassword')
                             @php $active="active" @endphp
                         @else
                             @php $active="" @endphp
                         @endif
-
 
                         <li class="nav-item menu-open">
                             <a href="#" class="nav-link {{ $active }}">
