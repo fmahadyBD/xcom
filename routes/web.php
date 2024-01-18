@@ -26,5 +26,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('check-current-password','AdminController@checkCurrentPassword') ;
         Route::get('logout','AdminController@logout') ;
 
+        //Cms CRUE
+
+        Route::get('cms-page','CmsController@index');
+
     });
 });

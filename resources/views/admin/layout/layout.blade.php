@@ -62,6 +62,9 @@
     <script src="{{ url('admin/plugins/raphael/raphael.min.js') }}"></script>
     <script src="{{ url('admin/plugins/jquery-mapael/jquery.mapael.min.js') }}"></script>
     <script src="{{ url('admin/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
+
+
+
     <!-- ChartJS -->
     <script src="{{ url('admin/plugins/chart.js/Chart.min.js') }}"></script>
 
@@ -71,6 +74,19 @@
     <script src="{{ url('admin/js/pages/dashboard2.js') }}"></script>
     <!-- custom je -->
     <script src="{{ url('admin/js/custom.js') }}"></script>
+
+
+
+    {{-- For the table --}}
+
+<script src="{{ url('admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{ url('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{ url('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script>
+    $(function () {
+      $("#cmspages").DataTable();
+    });
+  </script>
 
 </body>
 
