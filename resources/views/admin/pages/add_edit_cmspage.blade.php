@@ -43,8 +43,26 @@
           <div class="card-body">
             <div class="row">
               <div class="col-12">
+                @if (Session::has('success_message'))
+                <div class="alert alert-warning alert-denger fade show" role="alert">
+                    <strong>Success:</strong> {{ Session::get('success_message') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
 
-                <form name="cmsFrom" id="cmsFrom" action="{{url('admin/add-edit-cms-page')}}" method="POST">
+                @endif
+
+                <form name="cmsFrom" id="cmsFrom" action="{{url('admin/add-edit-cms-page')}}" method="post">
                     @csrf
                     <div class="card-body">
                       <div class="form-group">
@@ -76,7 +94,7 @@
                         <input type="text" class="form-control" id="meta_keywords" placeholder="Enter Meta Keywords" name="meta_keywords">
                       </div>
 
-
+                      <button type="submit" class="btn btn-info btn-flat">Add</button>
                     </div>
 
                   </form>

@@ -51,8 +51,36 @@ class CmsController extends Controller
     {
       if($id==""){
         $title="ADD CMS Page";
+        $cmspage=new CmsPage;
+        $message="CMS Page Added successfully";
       }else{
         $title="Edit CMS Page";
+      }
+      if($request->isMethod('POST')){
+        $data=$request->all();
+        //print
+        $rules=[
+            'title'=>'required',
+            'url'=>'required',
+            'description'=>'required',
+
+        ];
+        $customMessages=[
+            'title.required'=>'Page Title is required',
+            'url.required'=>'Page url is required',
+            'description.required'=>'Page description is required',
+
+        ];
+        $this->validate($request,$rules,$customMessages);
+        $cmspage->title=$data['title'];
+        $cmspage->url=$data['url'];
+        $cmspage->description=$data['description'];
+        $cmspage->meta_title=$data['meta_title'];
+        $cmspage->meta_description=$data['meta_description'];
+        $cmspage->meta_keywords=$data['meta_keywords'];
+        $cmspage->status=1;
+        $cmspage->save();
+        return redirect('admin/cms-page')->with('success_message',$message);
       }
       return view('admin.pages.add_edit_cmspage')->with(compact('title'));
     }

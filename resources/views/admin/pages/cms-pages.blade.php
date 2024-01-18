@@ -50,7 +50,7 @@
                                                 <td>{{ $page['id'] }}</td>
                                                 <td>{{ $page['title'] }}</td>
                                                 <td>{{ $page['url'] }}</td>
-                                                <td>{{ $page['created_at'] }}</td>
+                                                <td>{{ date("F j,Y,g:i a",strtotime($page['created_at'])) }}</td>
                                                 <td>
                                                     @if ($page['status'] == 1)
                                                         <a class="updateCmsPageStatus" id="page-{{ $page['id'] }}"
