@@ -8,3 +8,33 @@ After clone:
 	php artisan db:seed
 
 
+
+php artisan make:model CmsPage -m
+change table cms
+
+
+php artisan migrate
+
+php artisan make:seeder CmsPageTableSeeder
+change cms seeder
+change database seeder
+php artisan DB:seed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
