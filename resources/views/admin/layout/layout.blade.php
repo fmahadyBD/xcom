@@ -16,6 +16,12 @@
     <link rel="stylesheet" href="{{ url('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ url('admin/css/adminlte.min.css') }}">
+
+
+ <!-- Select2 -->
+ <link rel="stylesheet" href="{{ url('admin/plugins/select2/css/select2.min.css') }}">
+ <link rel="stylesheet" href="{{ url('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+
 </head>
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -87,6 +93,15 @@
       $("#cmspages").DataTable();
     });
   </script>
+
+
+<!-- Select2 -->
+<script src="{{ url('admin/plugins/select2/js/select2.full.min.js')}}"></script>
+
+<script>
+
+$('.select2').select2();
+</script>
 
 </body>
 

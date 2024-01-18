@@ -30,6 +30,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">CMS PAGES</h3>
+                                <a style="max-width: 150px;float: right;display: inline-block" href="{{url('admin/add-edit-cms-page')}}" class="btn btn-block btn-primary">Add CMS Page</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
