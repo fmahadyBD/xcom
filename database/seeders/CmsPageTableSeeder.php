@@ -26,7 +26,6 @@ class CmsPageTableSeeder extends Seeder
         ['id'=>3,'title'=>"Privicy Policy",'description'=>'COnent is comming soon','url'=>'privacy-policy',
          'meta_title'=>'Privacy  policy','meta_description'=>'Privicy Policy uus Contetnt','meta_keywords'=>'Privicy Policy','status'=>1
         ],
-
       ];
       CmsPage::insert($cmsPagesRecords);
     }
