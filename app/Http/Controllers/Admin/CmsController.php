@@ -13,11 +13,7 @@ class CmsController extends Controller
      */
     public function index()
     {
-        // $cmsPages=CmsPage::get()->toArray();
-        // // dd($cmsPages);
-        // // return view('admin.pages.cms-pages')->with(compact('cmsPages'));
-        // return view('admin.pages.cms-pages')->with(compact('cmsPages'));
-        // //with passed the CmsPages Arry
+
         $cmsPages = CmsPage::get()->toArray();
         // dd($cmsPages);
         return view('admin.pages.cms-pages')->with(compact('cmsPages'));
@@ -61,7 +57,18 @@ class CmsController extends Controller
      */
     public function update(Request $request, CmsPage $cmsPage)
     {
-        //
+        if($request->ajax()){
+            $data=$request->all();
+            // echo"<pre>";
+            // print_r($data); die;
+            if($data['status']=='Active'){
+                $status=0;
+            }else{
+                $status=1;
+            }
+            CmsPage::where('id',$data['page_id'])->update(['status'=>$status]);
+            return response()->json(['status'=>$status,'page_id'=>$data['page_id']]);
+        }
     }
 
     /**
