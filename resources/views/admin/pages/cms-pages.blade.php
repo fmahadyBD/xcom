@@ -67,6 +67,9 @@
                                                     &nbsp; &nbsp;
                                                     <a style='color: #3fed3;' href="{{url('admin/add-edit-cms-page/'.$page['id'])}}">
                                                     <i class="fas fa-edit"></i>
+                                                    &nbsp; &nbsp;
+                                                    <a  style='color: red;' href="{{url('admin/delete-cms-page/'.$page['id'])}}">
+                                                    <i class="fas fa-trash"></i>
                                                     </a>
 
 

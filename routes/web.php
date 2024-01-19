@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CmsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -28,9 +29,10 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         //Cms CRUE
 
-        Route::get('cms-page','CmsController@index');
+        Route::get('/cms-page','CmsController@index');
+        Route::get('/cms-pages/', [CmsController::class, 'index'])->name('cms-pages');
         Route::post('update-cms-pages-page-status','CmsController@update');
         Route::match(['get','post'],'add-edit-cms-page/{id?}','CmsController@edit');
-
+        Route::get('delete-cms-page/{id?}','CmsController@destroy');
     });
 });
