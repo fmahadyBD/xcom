@@ -64,6 +64,10 @@
                                                             <i class="fas fa-toggle-off" status="Inactive"></i>
                                                         </a>
                                                     @endif
+                                                    &nbsp; &nbsp;
+                                                    <a style='color: #3fed3;' href="{{url('admin/add-edit-cms-page/'.$page['id'])}}">
+                                                    <i class="fas fa-edit"></i>
+                                                    </a>
 
 
 

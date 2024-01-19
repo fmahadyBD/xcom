@@ -30,7 +30,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         Route::get('cms-page','CmsController@index');
         Route::post('update-cms-pages-page-status','CmsController@update');
-        Route::match(['get','post'],'add-edit-cms-page','CmsController@edit');
+        Route::match(['get','post'],'add-edit-cms-page/{id?}','CmsController@edit');
 
     });
 });
