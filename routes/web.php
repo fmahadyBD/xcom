@@ -38,8 +38,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         // /sub admin
         Route::get('subadmins','AdminController@subAdmins');
         Route::post('/update-subadmin-status','AdminController@updateSubadminStatus');
-        // Route::get('delete-subadmin/{id?}','AdminController@deleteSubadmin');
-        // Route::match(['get', 'post'], 'delete-subadmin/{id?}', 'AdminController@deleteSubadmin');
+
         Route::get('delete-subadmin/{id?}','AdminController@deletesbadmin');
+        Route::match(['get','post'],'add-subadmin/{id?}','AdminController@editSubadmin');
     });
 });

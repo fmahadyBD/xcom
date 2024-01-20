@@ -186,30 +186,72 @@ class AdminController extends Controller
             // print_r($data); die;
             // if ($data['status'] == 'Active') {
 
-                if ($data['status'] == 'Active' || $data['status'] == 'active') {
-                    $status = 0;
-
-
+            if ($data['status'] == 'Active' || $data['status'] == 'active') {
+                $status = 0;
             } else {
                 $status = 1;
-
             }
 
             Admin::where('id', $data['subadmin_id'])->update(['status' => $status]);
             return response()->json(['status' => $status, 'subadmin_id' => $data['subadmin_id']]);
         }
     }
-    public function deleteSubadminx($id){
+    public function deleteSubadminx($id)
+    {
 
         // delete the sub admin
-        Admin::where('id',$id)->delete();
-        return redirect()->back()->with('success_message','Subadmin delete successfuly');
-
+        Admin::where('id', $id)->delete();
+        return redirect()->back()->with('success_message', 'Subadmin delete successfuly');
     }
     public function deletesbadmin($id)
     {
         //delete
-        Admin::where('id',$id)->delete();
-        return redirect()->back()->with('success_message','CMS Page delete successfuly');
+        Admin::where('id', $id)->delete();
+        return redirect()->back()->with('success_message', 'CMS Page delete successfuly');
+    }
+
+
+    // add subadmin
+    public function editSubadmin(Request $request, $id = null)
+    {
+        Session::put('page', 'cms-pages');
+        if ($id == "") {
+            $title = "ADD Subadmin ";
+            $subadmin = new Admin();
+            $message = "SubadminAdded successfully";
+        } else {
+            $title = "Edit Subadmin";
+            $subadmin = Admin::find($id);
+            $message = "SubadminUpdated successfully";
+        }
+        if ($request->isMethod('POST')) {
+            $data = $request->all();
+            echo "<pre>";print_r($data);die;
+            //print
+            $rules = [
+                // 'title' => 'required',
+                // 'url' => 'required',
+                // 'description' => 'required',
+
+            ];
+            $customMessages = [
+                // 'title.required' => 'Page Title is required',
+                // 'url.required' => 'Page url is required',
+                // 'description.required' => 'Page description is required',
+
+            ];
+            $this->validate($request, $rules, $customMessages);
+            $subadmin->name = $data['name'];
+            $subadmin->email = $data['email'];
+            $subadmin->type = $data['type'];
+            $subadmin->mobile = $data['mobile'];
+            $subadmin->password = $data['password'];
+            // $subadmin->image = $data['image'];
+            $subadmin->status = 1;
+            $subadmin->save();
+            return redirect('admin/add-subadmin')->with('success_message', $message);
+        }
+        return view('admin.subadmins.add_edit_subadmin')->with(compact('title', 'subadmin'));
+        // pass korlam cmpage
     }
 }
