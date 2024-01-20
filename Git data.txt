@@ -53,6 +53,12 @@ change the blade
 seesion add
 
 
+copy cms page look for sub admin rolles
+look for the name page. it take a lot time from me :)
+check the recordid it take more time
+
+
+
 
 
 

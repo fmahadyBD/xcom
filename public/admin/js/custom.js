@@ -33,7 +33,7 @@ $(document).ready(function () {
         var page_id = $(this).attr("page_id");
 
         // Alert to test if the attributes are correctly obtained
-        alert(page_id);
+        // alert(page_id);
 
         // Make an AJAX request to update the CMS page status
         $.ajax({
@@ -60,6 +60,41 @@ $(document).ready(function () {
             },
         });
     });
+
+//updat ethe sub domain
+
+$(document).on("click", ".updateSubadminsStatus", function () {
+
+    var status = $(this).children("i").attr("status");
+    var subadmin_id = $(this).attr("subadmin_id");
+
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        type: "post",
+        url: "/admin/update-subadmin-status",
+        data: { status: status,subadmin_id: subadmin_id },
+        success: function (resp) {
+            // Handle success response
+            if (resp["status"] == 0) {
+                $("#subadmin-" + subadmin_id).html(
+                    "<i class='fas fa-toggle-off' style='color:grey' status='Inactive'></i>"
+                    );
+
+            } else if (resp["status"] == 1) {
+                $("#subadmin-" + subadmin_id).html(
+                    "<i class='fas fa-toggle-on' style='color: blue' status='Active'></i>"
+                    );
+
+            }
+        },
+        error: function () {
+            alert("Error");
+        },
+    });
+});
+
 
     // simple jequree the delete the cms page
     $(document).on("click", ".confirmedDelete", function () {

@@ -13,6 +13,9 @@ use image;
 
 
 use Session;
+
+use function Laravel\Prompts\alert;
+
 // Sir this 'image' create the problem in this project. I
 
 
@@ -20,7 +23,7 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        Session::put('page','dashboard');
+        Session::put('page', 'dashboard');
 
 
         return view('admin.dashboard');
@@ -29,11 +32,12 @@ class AdminController extends Controller
     {
 
 
-        Session::put('page','login');
+        Session::put('page', 'login');
 
         if ($request->isMethod('post')) {
             $data = $request->all();
-            echo"<pre>";print_r($data);
+            echo "<pre>";
+            print_r($data);
 
 
             $rules = [
@@ -53,12 +57,12 @@ class AdminController extends Controller
 
 
                 // Remember Admin Email & password with cookies
-                if(isset($data['remember'])&& !empty($data['remember'])){
-                    setcookie("email",$data['email'],time()+3600);
-                    setcookie("password",$data['password'],time()+3600);
-                }else{
-                    setcookie("email","");
-                    setcookie("password","");
+                if (isset($data['remember']) && !empty($data['remember'])) {
+                    setcookie("email", $data['email'], time() + 3600);
+                    setcookie("password", $data['password'], time() + 3600);
+                } else {
+                    setcookie("email", "");
+                    setcookie("password", "");
                 }
 
 
@@ -82,7 +86,7 @@ class AdminController extends Controller
     public function updatePassword(Request $request)
     {
 
-        Session::put('page','updatepassword');
+        Session::put('page', 'updatepassword');
 
 
         if ($request->isMethod('post')) {
@@ -121,16 +125,15 @@ class AdminController extends Controller
     public function edit(Request $request)
     {
 
-        Session::put('page','updatedetails');
+        Session::put('page', 'updatedetails');
         return view('admin.update_details');
-
     }
 
 
     public function updateDetails(Request $request)
     {
 
-        Session::put('page','updatedetails');
+        Session::put('page', 'updatedetails');
 
         $rules = [
 
@@ -163,18 +166,50 @@ class AdminController extends Controller
 
                 // Call the updateDetails method on the Admin model with the $id parameter
                 $admin->updateDetailsx($request, $id);
-
-
             }
         }
         return redirect()->back()->with('success_message', 'true');
-
-
     }
-    public function subAdmins(){
-        Session::put('page','subadmins');
-        $subadmins= Admin::where('type','subadmin')->get();
+    public function subAdmins()
+    {
+        Session::put('page', 'subadmins');
+        $subadmins = Admin::where('type', 'subadmin')->get();
         // use compact for pass the array to blade
         return view('admin.subadmins.subadmins')->with(compact('subadmins'));
+    }
+    public function updateSubadminStatus(Request $request)
+    {
+        Session::put('page', 'cms-pages');
+        if ($request->ajax()) {
+            $data = $request->all();
+            // echo"<pre>";
+            // print_r($data); die;
+            // if ($data['status'] == 'Active') {
+
+                if ($data['status'] == 'Active' || $data['status'] == 'active') {
+                    $status = 0;
+
+
+            } else {
+                $status = 1;
+
+            }
+
+            Admin::where('id', $data['subadmin_id'])->update(['status' => $status]);
+            return response()->json(['status' => $status, 'subadmin_id' => $data['subadmin_id']]);
+        }
+    }
+    public function deleteSubadminx($id){
+
+        // delete the sub admin
+        Admin::where('id',$id)->delete();
+        return redirect()->back()->with('success_message','Subadmin delete successfuly');
+
+    }
+    public function deletesbadmin($id)
+    {
+        //delete
+        Admin::where('id',$id)->delete();
+        return redirect()->back()->with('success_message','CMS Page delete successfuly');
     }
 }

@@ -30,7 +30,9 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Sub Admins</h3>
-                                <a style="max-width: 150px;float: right;display: inline-block" href="{{url('admin/add-edit-subadmin')}}" class="btn btn-block btn-primary">Add Sub Admin</a>
+                                <a style="max-width: 150px;float: right;display: inline-block"
+                                    href="{{ url('admin/add-edit-subadmin') }}" class="btn btn-block btn-primary">Add Sub
+                                    Admin</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -56,8 +58,35 @@
                                                 <td>{{ $subadmin->type }}</td>
 
 
-                                                <td>{{ date("F j,Y,g:i a",strtotime($subadmin->created_at)) }}</td>
+                                                <td>{{ date('F j,Y,g:i a', strtotime($subadmin->created_at)) }}</td>
                                                 <td>
+
+                                                    @if ($subadmin->status == 1)
+                                                        <a class="updateSubadminsStatus" id="subadmin-{{ $subadmin->id }}"
+                                                            subadmin_id="{{ $subadmin->id }}" style="color: blue"
+                                                            href="javascript:void(0)">
+                                                            <i class="fas fa-toggle-on" status="Active"></i>
+                                                        </a>
+                                                    @else
+                                                        <a class="updateSubadminsStatus" id="subadmin-{{ $subadmin->id }}"
+                                                            subadmin_id="{{ $subadmin->id }}" style="color: gray"
+                                                            href="javascript:void(0)">
+                                                            <i class="fas fa-toggle-off" status="Inactive"></i>
+                                                        </a>
+                                                    @endif
+
+
+                                                    &nbsp; &nbsp;
+                                                    <a style='color: red;' class="confirmedDelete" name="Subadmin "title="
+                                                        Delete Subadmin" href="javascript:void(0)" record="subadmin"
+                                                        recordid={{ $subadmin->id }}>
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                    {{-- <a style='color: red;' class="confirmedDelete" name="Delete CMS Page"
+                                                        title="Delete CMS Page" href="javascript:void(0)" record="cms-page"
+                                                        recordid={{ $page['id'] }}>
+                                                        <i class="fas fa-trash"></i>
+                                                    </a> --}}
                                                 </td>
 
                                             </tr>
