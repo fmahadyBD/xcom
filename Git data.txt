@@ -31,6 +31,14 @@ add script in layout
 now add script into the custiom.js from sweetalret from websitte
 
 --------------------------------------------------
+----------->> Admin login from Remember me <<-------------
+#24
+1.save data in cookies process okay!
+
+2.check remember buutton is work?
+3.Admin controller and login blade
+
+----------------->> 
 
 
 
