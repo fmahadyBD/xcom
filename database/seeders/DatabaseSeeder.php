@@ -9,7 +9,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // after 16
-        // $this->call(AdminsTableSeeder::class);
-        $this->call(CmsPageTableSeeder::class);
+        $this->call(AdminsTableSeeder::class);
+        // $this->call(CmsPageTableSeeder::class);
     }
 }

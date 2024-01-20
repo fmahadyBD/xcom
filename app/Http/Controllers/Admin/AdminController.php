@@ -171,4 +171,10 @@ class AdminController extends Controller
 
 
     }
+    public function subAdmins(){
+        Session::put('page','subadmins');
+        $subadmins= Admin::where('type','subadmin')->get();
+        // use compact for pass the array to blade
+        return view('admin.subadmins.subadmins')->with(compact('subadmins'));
+    }
 }

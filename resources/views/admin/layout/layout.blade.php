@@ -91,6 +91,9 @@
 <script>
     $(function () {
       $("#cmspages").DataTable();
+
+
+      $("#subadmins").DataTable();
     });
   </script>
 

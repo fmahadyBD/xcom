@@ -34,5 +34,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('update-cms-pages-page-status','CmsController@update');
         Route::match(['get','post'],'add-edit-cms-page/{id?}','CmsController@edit');
         Route::get('delete-cms-page/{id?}','CmsController@destroy');
+
+        // /sub admin
+        Route::get('subadmins','AdminController@subAdmins');
     });
 });

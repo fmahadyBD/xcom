@@ -38,7 +38,20 @@ now add script into the custiom.js from sweetalret from websitte
 2.check remember buutton is work?
 3.Admin controller and login blade
 
------------------>> 
+----------------->> Sub admin  display the subadmins<<-------------
+
+admin table seeder
+database seeder change the comment
+
+php artisan DB:seed
+now add the blade file
+chnage in side blade
+route
+controller
+layout for script
+change the blade
+seesion add
+
 
 
 
