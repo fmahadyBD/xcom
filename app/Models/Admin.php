@@ -56,4 +56,17 @@ class Admin extends Authenticatable
             dd($e->getMessage()); // Log or display the exception message
         }
     }
+
+    public static function subadminimageUpload($request)
+    {
+        self::$image      = $request->file('image');
+        // self::$imageName  = self::$image->getClientOriginalName();
+        self::$imageName = $request->file('image')->getClientOriginalName();
+        self::$directory  = "admin/images/photos/";
+        // self::$image->move(self::$directory, self::$imageName);
+        // return self::$directory . self::$imageName;
+        self::$image->storeAs(self::$directory, self::$imageName, 'public');
+        return self::$directory . self::$imageName;
+    }
+   
 }

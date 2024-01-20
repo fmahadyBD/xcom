@@ -68,9 +68,12 @@
                                         <div class="form-group">
                                             <label for="name">Name</label>
                                             <input type="text" class="form-control" id="name"
-                                                placeholder="Enter Subadmin"
-                                                name="title"@if (!empty($subadmin['name'])) value="{{ $subadmin['name'] }}" @endif>
+                                                placeholder="Enter Subadmin" name="name"
+                                               @if (!empty($subadmin['name'])) value="{{ $subadmin['name'] }}" @endif>
+
+                                               
                                         </div>
+
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="text" class="form-control" id="email"
@@ -93,7 +96,7 @@
                                         <div class="form-group">
                                             <label for="image">Image</label>
                                             <input type="file" class="form-control" id="image" name="image">
-                                           
+
                                                 @if (isset($subadmin['image']))
                                                     <a target="_blank"
                                                         href="{{ url('admin/images/photos/' . $subadmin['image']) }}">View

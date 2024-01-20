@@ -212,6 +212,8 @@ class AdminController extends Controller
 
 
     // add subadmin
+
+
     public function editSubadmin(Request $request, $id = null)
     {
         Session::put('page', 'cms-pages');
@@ -224,34 +226,37 @@ class AdminController extends Controller
             $subadmin = Admin::find($id);
             $message = "SubadminUpdated successfully";
         }
+
         if ($request->isMethod('POST')) {
             $data = $request->all();
-            echo "<pre>";print_r($data);die;
-            //print
-            $rules = [
-                // 'title' => 'required',
-                // 'url' => 'required',
-                // 'description' => 'required',
 
-            ];
-            $customMessages = [
-                // 'title.required' => 'Page Title is required',
-                // 'url.required' => 'Page url is required',
-                // 'description.required' => 'Page description is required',
+            // Validate other fields as needed
 
-            ];
-            $this->validate($request, $rules, $customMessages);
+            // Handle file upload
+            if ($request->hasFile('image')) {
+                $imageUrl = Admin::subadminimageUpload($request);
+            } else {
+                $imageUrl = $subadmin->image; // Make sure $subadmin is defined
+            }
+
+            // Save other fields
             $subadmin->name = $data['name'];
             $subadmin->email = $data['email'];
-            $subadmin->type = $data['type'];
             $subadmin->mobile = $data['mobile'];
             $subadmin->password = $data['password'];
-            // $subadmin->image = $data['image'];
+            // Set 'status' and other fields as needed
+            $subadmin->type = 'subadmin'; // Fixed typo in your code
             $subadmin->status = 1;
-            $subadmin->save();
-            return redirect('admin/add-subadmin')->with('success_message', $message);
+            $subadmin->image = $imageUrl;
+
+            try {
+                $result = $subadmin->save();
+                return redirect()->back()->with('success_message', 'true');
+            } catch (\Exception $e) {
+                dd($e->getMessage()); // Log or display the exception message
+            }
         }
+
         return view('admin.subadmins.add_edit_subadmin')->with(compact('title', 'subadmin'));
-        // pass korlam cmpage
     }
 }
