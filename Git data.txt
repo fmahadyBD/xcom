@@ -8,17 +8,33 @@ After clone:
 	php artisan db:seed
 
 
+This is Form the cms page:
 
 php artisan make:model CmsPage -m
 change table cms
-
-
 php artisan migrate
-
 php artisan make:seeder CmsPageTableSeeder
 change cms seeder
 change database seeder
 php artisan DB:seed
+
+--------------------->> Add A SweetAlret in Delete option <<--------------
+Now Sweet Alert2 jQuery:
+
+1. Goto the cmsblade create class confirmedDelete
+2. goto Cstom jqeree
+
+now add the sweet alert:
+install node js
+npm install sweetalert2
+add script in layout
+now add script into the custiom.js from sweetalret from websitte
+
+--------------------------------------------------
+
+
+
+
 
 
 

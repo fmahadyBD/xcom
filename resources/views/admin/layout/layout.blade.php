@@ -103,6 +103,9 @@
 $('.select2').select2();
 </script>
 
+{{-- The sweer alret --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>
