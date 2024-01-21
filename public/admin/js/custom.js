@@ -61,40 +61,36 @@ $(document).ready(function () {
         });
     });
 
-//updat ethe sub domain
+    //updat ethe sub domain
 
-$(document).on("click", ".updateSubadminsStatus", function () {
+    $(document).on("click", ".updateSubadminsStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var subadmin_id = $(this).attr("subadmin_id");
 
-    var status = $(this).children("i").attr("status");
-    var subadmin_id = $(this).attr("subadmin_id");
-
-    $.ajax({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        type: "post",
-        url: "/admin/update-subadmin-status",
-        data: { status: status,subadmin_id: subadmin_id },
-        success: function (resp) {
-            // Handle success response
-            if (resp["status"] == 0) {
-                $("#subadmin-" + subadmin_id).html(
-                    "<i class='fas fa-toggle-off' style='color:grey' status='Inactive'></i>"
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            type: "post",
+            url: "/admin/update-subadmin-status",
+            data: { status: status, subadmin_id: subadmin_id },
+            success: function (resp) {
+                // Handle success response
+                if (resp["status"] == 0) {
+                    $("#subadmin-" + subadmin_id).html(
+                        "<i class='fas fa-toggle-off' style='color:grey' status='Inactive'></i>"
                     );
-
-            } else if (resp["status"] == 1) {
-                $("#subadmin-" + subadmin_id).html(
-                    "<i class='fas fa-toggle-on' style='color: blue' status='Active'></i>"
+                } else if (resp["status"] == 1) {
+                    $("#subadmin-" + subadmin_id).html(
+                        "<i class='fas fa-toggle-on' style='color: blue' status='Active'></i>"
                     );
-
-            }
-        },
-        error: function () {
-            alert("Error");
-        },
+                }
+            },
+            error: function () {
+                alert("Error");
+            },
+        });
     });
-});
-
 
     // simple jequree the delete the cms page
     $(document).on("click", ".confirmedDelete", function () {
@@ -135,8 +131,48 @@ $(document).on("click", ".updateSubadminsStatus", function () {
                     text: "Your file has been deleted.",
                     icon: "success",
                 });
-                window.location.href="/admin/delete-"+record+"/"+recordid;
+                window.location.href =
+                    "/admin/delete-" + record + "/" + recordid;
             }
         });
+    });
+
+    // check the email valid or not
+
+
+    $("#email").keyup(function () {
+        var email = $("#email").val();
+        // email it input text fild id
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            type: "post",
+            url: "/admin/add-subadmin",
+            // added actual url
+            data: { email: email },
+                    success: function (response) {
+                        // response received from controller to check email is already exist or not
+                        if (response.exists) {
+                            $("#verifyduplicate")
+                            //verifyduplicate this is the span id to print the error
+                                .text("Email already exists!")
+                                .css("color", "red");
+                            // You can handle further actions here
+                        } else {
+                            $("#verifyduplicate")
+                                .text("Email is available")
+                                .css("color", "green");
+                            // Email is available, you can handle further actions here
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        var errorMessage = xhr.responseText; // Get the error message from the response
+                        $("#verifyduplicate")
+                            .text("Not Matched " )
+                            .css("color", "green");
+                    },
+                });
     });
 });

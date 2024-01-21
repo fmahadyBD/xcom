@@ -184,7 +184,7 @@ class AdminController extends Controller
             $data = $request->all();
             // echo"<pre>";
             // print_r($data); die;
-            // if ($data['status'] == 'Active') {
+
 
             if ($data['status'] == 'Active' || $data['status'] == 'active') {
                 $status = 0;
@@ -217,20 +217,58 @@ class AdminController extends Controller
     public function editSubadmin(Request $request, $id = null)
     {
         Session::put('page', 'cms-pages');
-        if ($id == "") {
-            $title = "ADD Subadmin ";
-            $subadmin = new Admin();
-            $message = "SubadminAdded successfully";
-        } else {
+
+        if ($id) {
+            // Load form for editing subadmin
             $title = "Edit Subadmin";
             $subadmin = Admin::find($id);
             $message = "SubadminUpdated successfully";
+        } else {
+            // Load form for adding subadmin
+            $title = "ADD Subadmin ";
+            $subadmin = new Admin();
+            $message = "SubadminAdded successfully";
         }
 
-        if ($request->isMethod('POST')) {
-            $data = $request->all();
 
-            // Validate other fields as needed
+        if ($request->isMethod('POST')) {
+            $email = $request->input('email');
+
+            // Check if email exists in the database
+            $userExists = Admin::where('email', $email)->exists();
+            // check the email is already in database or not
+
+            if ($userExists) {
+                // Email already exists, handle the response (e.g., show an error message)
+
+
+
+               return response()->json(['exists' => true]);(['exists' => true, 'message' => 'Email already exists!']);
+                // redirect()->back()->with('success_message', 'Added Sussessfully');
+                // it is the response of the cuustom js to finding the email is exists or not
+            }
+
+
+
+       $rules = [
+            'name' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+            'mobile' => 'required|numeric|digits:11',
+            'image' => 'image',
+        ];
+
+        $customMessages = [
+            'name.required' => "Name is required",
+            'name.regex' => "Valid Name is required",
+            'mobile.required' => 'Mobile is required',
+            'mobile.numeric' => 'Valid Mobile is required',
+            'mobile.digits' => 'Valid Mobile is required',
+            'image.image' => 'Valid Image is required',
+        ];
+
+        $this->validate($request, $rules, $customMessages);
+
+
+            $data = $request->all();
 
             // Handle file upload
             if ($request->hasFile('image')) {
@@ -244,14 +282,13 @@ class AdminController extends Controller
             $subadmin->email = $data['email'];
             $subadmin->mobile = $data['mobile'];
             $subadmin->password = $data['password'];
-            // Set 'status' and other fields as needed
-            $subadmin->type = 'subadmin'; // Fixed typo in your code
+            $subadmin->type = 'subadmin';
             $subadmin->status = 1;
             $subadmin->image = $imageUrl;
 
             try {
                 $result = $subadmin->save();
-                return redirect()->back()->with('success_message', 'true');
+                return redirect()->back()->with('success_message', 'Added Sussessfully');
             } catch (\Exception $e) {
                 dd($e->getMessage()); // Log or display the exception message
             }
@@ -259,4 +296,6 @@ class AdminController extends Controller
 
         return view('admin.subadmins.add_edit_subadmin')->with(compact('title', 'subadmin'));
     }
+
+
 }
