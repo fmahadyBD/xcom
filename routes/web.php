@@ -41,5 +41,6 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         Route::get('delete-subadmin/{id?}','AdminController@deletesbadmin');
         Route::match(['get','post'],'add-subadmin/{id?}','AdminController@editSubadmin');
+        Route::post('check-email','AdminController@checkemail') ;
     });
 });

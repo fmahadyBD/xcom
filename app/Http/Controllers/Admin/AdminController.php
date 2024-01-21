@@ -114,7 +114,10 @@ class AdminController extends Controller
 
     public function checkCurrentPassword(Request $request)
     {
+        // check the current password and given password are same or not
         $data = $request->all();
+        // this funtion is not define as post mehton that's why we cheeck every data and find the email
+
 
         if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) {
             return "true";
@@ -122,6 +125,9 @@ class AdminController extends Controller
             return "false";
         }
     }
+
+
+
     public function edit(Request $request)
     {
 
@@ -159,13 +165,17 @@ class AdminController extends Controller
         ];
         // view('admin.update_details');
         $this->validate($request, $rules, $customMessages);
+        // it will print the error in from
+
         if ($request->isMethod('post')) {
             $admin = Auth::guard('admin')->user();
             $id = $admin->id;
             if ($admin) {
+                // check the admin in avelable
 
                 // Call the updateDetails method on the Admin model with the $id parameter
                 $admin->updateDetailsx($request, $id);
+                // check the current password and the same or nott
             }
         }
         return redirect()->back()->with('success_message', 'true');
@@ -217,6 +227,7 @@ class AdminController extends Controller
     public function editSubadmin(Request $request, $id = null)
     {
         Session::put('page', 'cms-pages');
+        // this is the section
 
         if ($id) {
             // Load form for editing subadmin
@@ -232,45 +243,26 @@ class AdminController extends Controller
 
 
         if ($request->isMethod('POST')) {
-            $email = $request->input('email');
 
-            // Check if email exists in the database
-            $userExists = Admin::where('email', $email)->exists();
-            // check the email is already in database or not
+    
+            $rules = [
+                'name' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
+                'mobile' => 'required|numeric|digits:11',
+                'image' => 'image',
+            ];
 
-            if ($userExists) {
-                // Email already exists, handle the response (e.g., show an error message)
-
-
-
-               return response()->json(['exists' => true]);(['exists' => true, 'message' => 'Email already exists!']);
-                // redirect()->back()->with('success_message', 'Added Sussessfully');
-                // it is the response of the cuustom js to finding the email is exists or not
-            }
-
-
-
-       $rules = [
-            'name' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
-            'mobile' => 'required|numeric|digits:11',
-            'image' => 'image',
-        ];
-
-        $customMessages = [
-            'name.required' => "Name is required",
-            'name.regex' => "Valid Name is required",
-            'mobile.required' => 'Mobile is required',
-            'mobile.numeric' => 'Valid Mobile is required',
-            'mobile.digits' => 'Valid Mobile is required',
-            'image.image' => 'Valid Image is required',
-        ];
-
-        $this->validate($request, $rules, $customMessages);
-
+            $customMessages = [
+                'name.required' => "Name is required",
+                'name.regex' => "Valid Name is required",
+                'mobile.required' => 'Mobile is required',
+                'mobile.numeric' => 'Valid Mobile is required ',
+                'mobile.digits' => '11 digit Mobile is required',
+                'image.image' => 'Valid Image is required',
+            ];
 
             $data = $request->all();
 
-            // Handle file upload
+            // Handle file upload from the Admin Model
             if ($request->hasFile('image')) {
                 $imageUrl = Admin::subadminimageUpload($request);
             } else {
@@ -285,17 +277,42 @@ class AdminController extends Controller
             $subadmin->type = 'subadmin';
             $subadmin->status = 1;
             $subadmin->image = $imageUrl;
+            // status and type defult save it can change by admin
+
+
+            $this->validate($request, $rules, $customMessages);
+            // print the validate mesasge
+
 
             try {
                 $result = $subadmin->save();
                 return redirect()->back()->with('success_message', 'Added Sussessfully');
             } catch (\Exception $e) {
-                dd($e->getMessage()); // Log or display the exception message
+                dd($e->getMessage());
             }
         }
 
         return view('admin.subadmins.add_edit_subadmin')->with(compact('title', 'subadmin'));
     }
 
+
+    public function checkemail(Request $request)
+    {
+        // check the current password and given password are same or not
+        $data = $request->all();
+        // by this funtion we get the email
+
+        //  theflow-> when type it. cause the email try to find. the url hit to web web call the check pass by post. and this is the functioon
+        $email=$data['email'];
+        // $email = $request->input('email');
+          $userExists = Admin::where('email', $email)->exists();
+
+
+        if ( $userExists) {
+            return "true";
+        } else {
+            return "false";
+        }
+    }
 
 }

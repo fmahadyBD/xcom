@@ -26,6 +26,48 @@ $(document).ready(function () {
         });
     });
 
+// check the email already in the database or not
+// it hit web->controller by every key
+    $("#email").keyup(function () {
+        var email = $("#email").val();
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            type: "post",
+            url: "/admin/check-email",
+            data: { email: email },
+            success: function (resp) {
+                if (resp == "true") {
+                    // $("#verifyduplicate").html(
+                    //     "Email is avelavil"
+                    // );
+                    $("#verifyduplicate")
+                        //verifyduplicate this is the span id to print the error
+                        .text("Email already exists!")
+                        .css("color", "red");
+
+                    // deasbel the submit button
+                    $("#submitBtn").prop("disabled", true);
+                } else if (resp == "false") {
+                    // $("#verifyduplicate").html("not");
+                    $("#verifyduplicate")
+                        .text("Email is available")
+                        .css("color", "green");
+                    // enable the submit button
+                    $("#submitBtn").prop("disabled", false);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("XHR Status:", status);
+                console.error("Error:", error);
+                // You can also log xhr.responseText for more details
+                $("#verifyduplicate").text("Error").css("color", "red");
+            },
+        });
+    });
+
     //update cms page
     $(document).on("click", ".updateCmsPageStatus", function () {
         // Get the status and page_id attributes from the clicked element
@@ -137,42 +179,5 @@ $(document).ready(function () {
         });
     });
 
-    // check the email valid or not
 
-
-    $("#email").keyup(function () {
-        var email = $("#email").val();
-        // email it input text fild id
-
-        $.ajax({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            type: "post",
-            url: "/admin/add-subadmin",
-            // added actual url
-            data: { email: email },
-                    success: function (response) {
-                        // response received from controller to check email is already exist or not
-                        if (response.exists) {
-                            $("#verifyduplicate")
-                            //verifyduplicate this is the span id to print the error
-                                .text("Email already exists!")
-                                .css("color", "red");
-                            // You can handle further actions here
-                        } else {
-                            $("#verifyduplicate")
-                                .text("Email is available")
-                                .css("color", "green");
-                            // Email is available, you can handle further actions here
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        var errorMessage = xhr.responseText; // Get the error message from the response
-                        $("#verifyduplicate")
-                            .text("Not Matched " )
-                            .css("color", "green");
-                    },
-                });
-    });
 });
