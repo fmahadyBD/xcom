@@ -74,7 +74,12 @@
                                                             <i class="fas fa-toggle-off" status="Inactive"></i>
                                                         </a>
                                                     @endif
-
+                                                    &nbsp; &nbsp;
+                                                    <a style='color: #3fed3;' href="#">
+                                                    <i class="fas fa-edit"></i>
+                                                    &nbsp; &nbsp;
+                                                    <a style='color: #3fed3;' href="{{url('admin/update-role/'.$subadmin->id)}}">
+                                                    <i class="fas fa-unlock"></i>
 
                                                     &nbsp; &nbsp;
                                                     <a style='color: red;' class="confirmedDelete" name="Subadmin "title="
@@ -82,11 +87,7 @@
                                                         recordid={{ $subadmin->id }}>
                                                         <i class="fas fa-trash"></i>
                                                     </a>
-                                                    {{-- <a style='color: red;' class="confirmedDelete" name="Delete CMS Page"
-                                                        title="Delete CMS Page" href="javascript:void(0)" record="cms-page"
-                                                        recordid={{ $page['id'] }}>
-                                                        <i class="fas fa-trash"></i>
-                                                    </a> --}}
+
                                                 </td>
 
                                             </tr>

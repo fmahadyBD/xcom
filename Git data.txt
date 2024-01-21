@@ -58,10 +58,11 @@ look for the name page. it take a lot time from me :)
 check the recordid it take more time
 
 
-
-
-
-
+----------->> Roles and Permissions in Laravel (V) | Set Permissions for Sub Admins<<-----------------
+1.php artisan make:migration create_admins_roles_table
+ 	edit the file
+2. php artisan migrate
+3. php artisan make:model AdminsRole
 
 
 

@@ -336,4 +336,18 @@ class AdminController extends Controller
 
     }
 
+
+    // update the role:
+    public function updateRole($id,Request $request){
+        $title="Update Subadmin Roles/Permission";
+
+        if($request->isMethod('post')){
+            $data=$request->all();
+            echo "<pre>";
+            print_r($data);
+            die;
+        }
+        return view('admin.subadmins.update_role')->with(compact('title','id'));
+    }
+
 }
