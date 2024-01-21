@@ -95,9 +95,10 @@
 
                                         <div class="form-group">
                                             <label for="mobile">Mobile</label>
-                                            <input type="text" class="form-control" id="mobile"
-                                                placeholder="Enter Subadmin Mobile" name="mobile"
-                                                @if (!empty($subadmin['mobile'])) value="{{ $subadmin['mobile'] }}" @endif>
+                                            <input type="text" class="form-control" id="smobile"
+                                                placeholder="Enter Subadmin Mobile" name="smobile"
+                                                @if (!empty($subadmin['smobile'])) value="{{ $subadmin['smobile'] }}" @endif>
+                                                <span id="verifymobile"></span>
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password</label>

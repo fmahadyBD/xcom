@@ -244,20 +244,22 @@ class AdminController extends Controller
 
         if ($request->isMethod('POST')) {
 
-    
+
             $rules = [
                 'name' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
-                'mobile' => 'required|numeric|digits:11',
+                'smobile' => 'required|numeric|digits:11',
                 'image' => 'image',
+                'password'=>'required',
             ];
 
             $customMessages = [
                 'name.required' => "Name is required",
                 'name.regex' => "Valid Name is required",
-                'mobile.required' => 'Mobile is required',
-                'mobile.numeric' => 'Valid Mobile is required ',
-                'mobile.digits' => '11 digit Mobile is required',
+                'smobile.required' => 'Mobile is required',
+                'smobile.numeric' => 'Valid Mobile is required ',
+                'smobile.digits' => '11 digit Mobile is required',
                 'image.image' => 'Valid Image is required',
+                'password.required' => "Password is required",
             ];
 
             $data = $request->all();
@@ -272,7 +274,7 @@ class AdminController extends Controller
             // Save other fields
             $subadmin->name = $data['name'];
             $subadmin->email = $data['email'];
-            $subadmin->mobile = $data['mobile'];
+            $subadmin->mobile = $data['smobile'];
             $subadmin->password = $data['password'];
             $subadmin->type = 'subadmin';
             $subadmin->status = 1;
@@ -313,6 +315,25 @@ class AdminController extends Controller
         } else {
             return "false";
         }
+    }
+
+    public function checkmobilenumber(Request $request){
+        // call ervey data data from request
+        $data = $request->all();
+
+
+        //
+        $mobile=$data['smobile'];
+
+        $count=strlen($mobile);
+
+
+        if ( $count>10) {
+            return "true";
+        } else {
+            return "false";
+        }
+
     }
 
 }

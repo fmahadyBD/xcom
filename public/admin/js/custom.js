@@ -68,6 +68,45 @@ $(document).ready(function () {
         });
     });
 
+    // count the mobile number
+    $("#smobile").keyup(function () {
+        var smobile = $("#smobile").val();
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            type: "post",
+            url: "/admin/check-mobile",
+            data: { smobile: smobile },
+            success: function (resp) {
+                if (resp == "true") {
+
+                    $("#verifymobile")
+
+                        .text("mobile is valid")
+                        .css("color", "green");
+
+                    // deasbel the submit button
+                    $("#submitBtn").prop("disabled", false);
+                } else if (resp == "false") {
+                    // $("#verifyduplicate").html("not");
+                    $("#verifymobile")
+                        .text("mobile is invalid")
+                        .css("color", "red");
+                    // enable the submit button
+                    $("#submitBtn").prop("disabled", true);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("XHR Status:", status);
+                console.error("Error:", error);
+                // You can also log xhr.responseText for more details
+                $("#verifymobile").text("Error").css("color", "red");
+            },
+        });
+    });
+
     //update cms page
     $(document).on("click", ".updateCmsPageStatus", function () {
         // Get the status and page_id attributes from the clicked element
