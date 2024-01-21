@@ -67,20 +67,54 @@
                                         </ul>
                                     </div>
                                 @endif
-                                <form name="subadminFrom" id="subadminFrom"
-                                    action="{{ url('admin/update-role/' . $id) }}" method="post" class="col-6">
+
+
+                                
+                                <form name="subadminFrom" id="subadminFrom" action="{{ url('admin/update-role/' . $id) }}"
+                                    method="post" class="col-6">
                                     @csrf
-                                    <input type="hidden" name="subadmin_id" value="{{$id}}">
+                                    <input type="hidden" name="subadmin_id" value="{{ $id }}">
+
+                                    @if (!@empty($subadminRoles))
+                                        @foreach ($subadminRoles as $role)
+                                            @if ($role['module'] == 'cms_page')
+                                                @if ($role['view_access'] == 1)
+                                                    @php $viewCMSPage="checked"@endphp
+                                                @else
+                                                    @php $viewCMSPage=""@endphp
+                                                @endif
+                                            @endif
+                                            @if ($role['module'] == 'cms_page')
+                                                @if ($role['edit_access'] == 1)
+                                                    @php $editCMSPage="checked"@endphp
+                                                @else
+                                                    @php $editCMSPage=""@endphp
+                                                @endif
+                                            @endif
+                                            @if ($role['module'] == 'cms_page')
+                                                @if ($role['full_access'] == 1)
+                                                    @php $fullCMSPage="checked"@endphp
+                                                @else
+                                                    @php $fullCMSPage=""@endphp
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    @endif
+
                                     <div class="form-group">
                                         <label for="">CMS Pages:</label>
                                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                                        <input type="checkbox" name="cms_pages[view]" value="1"> &nbsp;View
+                                        <input type="checkbox" name="cms_page[view]" value="1"
+                                            @if (isset($viewCMSPage)) {{ $viewCMSPage }} @endif> &nbsp;View
                                         &nbsp;&nbsp;&nbsp;
                                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                                        <input type="checkbox" name="cms_pages[edit]"value="1"> &nbsp;View/Edit Access
+                                        <input type="checkbox" name="cms_page[edit]"value="1"
+                                            @if (isset($editCMSPage)) {{ $editCMSPage }} @endif> &nbsp;View/Edit
+                                        Access
                                         &nbsp;&nbsp;&nbsp;
                                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                                        <input type="checkbox" name="cms_pages[full_access]"value="1"> &nbsp;Full Access
+                                        <input type="checkbox" name="cms_page[full_access]"value="1"
+                                            @if (isset($fullCMSPage)) {{ $fullCMSPage }} @endif> &nbsp;Full Access
                                         &nbsp;&nbsp;&nbsp;
 
                                     </div>

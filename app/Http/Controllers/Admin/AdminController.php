@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
-
+use App\Models\AdminsRole;
 use Illuminate\Http\Request;
 use Auth;
 use Validator;
@@ -249,7 +249,7 @@ class AdminController extends Controller
                 'name' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
                 'smobile' => 'required|numeric|digits:11',
                 'image' => 'image',
-                'password'=>'required',
+                'password' => 'required',
             ];
 
             $customMessages = [
@@ -305,49 +305,88 @@ class AdminController extends Controller
         // by this funtion we get the email
 
         //  theflow-> when type it. cause the email try to find. the url hit to web web call the check pass by post. and this is the functioon
-        $email=$data['email'];
+        $email = $data['email'];
         // $email = $request->input('email');
-          $userExists = Admin::where('email', $email)->exists();
+        $userExists = Admin::where('email', $email)->exists();
 
 
-        if ( $userExists) {
+        if ($userExists) {
             return "true";
         } else {
             return "false";
         }
     }
 
-    public function checkmobilenumber(Request $request){
+    public function checkmobilenumber(Request $request)
+    {
         // call ervey data data from request
         $data = $request->all();
 
 
         //
-        $mobile=$data['smobile'];
+        $mobile = $data['smobile'];
 
-        $count=strlen($mobile);
+        $count = strlen($mobile);
 
 
-        if ( $count>10) {
+        if ($count > 10) {
             return "true";
         } else {
             return "false";
         }
-
     }
 
 
     // update the role:
-    public function updateRole($id,Request $request){
-        $title="Update Subadmin Roles/Permission";
+    public function updateRole($id, Request $request)
+    {
+        $title = "Update Subadmin Roles/Permission";
+        $subadminRoles = AdminsRole::where('subadmin_id', $id)->get()->toArray();
 
-        if($request->isMethod('post')){
-            $data=$request->all();
-            echo "<pre>";
-            print_r($data);
-            die;
+        //   dd($subadminRoles);
+        // dd to check the
+        if ($request->isMethod('post')) {
+
+            $data = $request->all();
+            // for debug the code
+            // echo "<pre>";
+            // print_r($data);
+            // die;
+            // delete the privios value
+
+
+
+            AdminsRole::where('subadmin_id', $id)->delete();
+            // added the new value
+            // check thee cms_page view hase value?
+            if (isset($data['cms_page']['view'])) {
+                $cms_page_view = $data['cms_page']['view'];;
+            } else {
+                $cms_page_view = 0;
+            }
+            if (isset($data['cms_page']['edit'])) {
+                $cms_page_edit = $data['cms_page']['edit'];
+            } else {
+                $cms_page_edit = 0;
+            }
+            if (isset($data['cms_page']['full_access'])) {
+                $cms_page_full_access = $data['cms_page']['full_access'];
+            } else {
+                $cms_page_full_access = 0;
+            }
+
+            $role = new AdminsRole;
+            $role->subadmin_id    = $id;
+            $role->module    = 'cms_page';
+            $role->view_access    =  $cms_page_view;
+            $role->edit_access    = $cms_page_edit;
+            $role->full_access    = $cms_page_full_access;
+            $role->save();
+
+            $message = "Subadmin Role Update sccessfully";
+            return redirect()->back()->with('success_message', $message);
         }
-        return view('admin.subadmins.update_role')->with(compact('title','id'));
-    }
 
+        return view('admin.subadmins.update_role')->with(compact('title', 'id', 'subadminRoles'));
+    }
 }
