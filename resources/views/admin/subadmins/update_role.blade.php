@@ -125,7 +125,7 @@
                                             @endif
                                         @endforeach
                                     @endif
-
+                                    {{--  viewCMS page or viewSubadminDetails is define in privios to figuer out checked or not --}}
                                     <div class="form-group">
                                         <label for="">CMS Pages:</label>
                                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
@@ -147,18 +147,18 @@
                                     <div class="form-group">
                                         <label for="">Subadmins:</label>
                                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-                                        <input type="checkbox" name="subadmin[view]" value="1"
+                                        <input type="checkbox" name="subadmin[subadmin_view_access]" value="1"
                                             @if (isset($viewSubadminDetails)) {{ $viewSubadminDetails }} @endif>
                                         &nbsp;View
                                         &nbsp;&nbsp;&nbsp;
                                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                                        <input type="checkbox" name="subadmin[edit]"value="1"
+                                        <input type="checkbox" name="subadmin[subadmin_edit_access]"value="1"
                                             @if (isset($editSubadminDetails)) {{ $editSubadminDetails }} @endif>
                                         &nbsp;View/Edit
                                         Access
                                         &nbsp;&nbsp;&nbsp;
                                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                                        <input type="checkbox" name="subadmin[full_access]"value="1"
+                                        <input type="checkbox" name="subadmin[subadmin_full_access]"value="1"
                                             @if (isset($fullSubadminDetails)) {{ $fullSubadminDetails }} @endif>
                                         &nbsp;Full Access
                                         &nbsp;&nbsp;&nbsp;
