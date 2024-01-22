@@ -98,6 +98,31 @@
                                                     @php $fullCMSPage=""@endphp
                                                 @endif
                                             @endif
+
+
+
+
+                                            @if ($role['module'] == 'cms_page')
+                                                @if ($role['subadmin_view_access'] == 1)
+                                                    @php $viewSubadminDetails="checked"@endphp
+                                                @else
+                                                    @php $viewSubadminDetails=""@endphp
+                                                @endif
+                                            @endif
+                                            @if ($role['module'] == 'cms_page')
+                                                @if ($role['subadmin_edit_access'] == 1)
+                                                    @php $editSubadminDetails="checked"@endphp
+                                                @else
+                                                    @php $editSubadminDetails=""@endphp
+                                                @endif
+                                            @endif
+                                            @if ($role['module'] == 'cms_page')
+                                                @if ($role['subadmin_full_access'] == 1)
+                                                    @php $fullSubadminDetails="checked"@endphp
+                                                @else
+                                                    @php $fullSubadminDetails=""@endphp
+                                                @endif
+                                            @endif
                                         @endforeach
                                     @endif
 
@@ -123,24 +148,30 @@
                                         <label for="">Subadmins:</label>
                                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
                                         <input type="checkbox" name="subadmin[view]" value="1"
-                                           > &nbsp;View
+                                            @if (isset($viewSubadminDetails)) {{ $viewSubadminDetails }} @endif>
+                                        &nbsp;View
                                         &nbsp;&nbsp;&nbsp;
                                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
                                         <input type="checkbox" name="subadmin[edit]"value="1"
-                                           > &nbsp;View/Edit
+                                            @if (isset($editSubadminDetails)) {{ $editSubadminDetails }} @endif>
+                                        &nbsp;View/Edit
                                         Access
                                         &nbsp;&nbsp;&nbsp;
                                         &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
                                         <input type="checkbox" name="subadmin[full_access]"value="1"
-                                           > &nbsp;Full Access
+                                            @if (isset($fullSubadminDetails)) {{ $fullSubadminDetails }} @endif>
+                                        &nbsp;Full Access
                                         &nbsp;&nbsp;&nbsp;
 
                                     </div>
                                     <button type="submit" id="submitBtn" class="btn btn-info btn-flat">Update</button>
+
+
+                                </form>
+
+
+
                             </div>
-
-                            </form>
-
 
                         </div>
                         <!-- /.col -->

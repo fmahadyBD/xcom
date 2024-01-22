@@ -18,8 +18,8 @@ class AdminsTableSeeder extends Seeder
         $password=Hash::make('123456');
         $adminRecords=[
 
-            // ['id'=>1,'name'=>'Admin','type'=>'admin','mobile'=>00000000000,'email'=>'admin@admin.com',
-            // 'password'=>$password,'image'=>'','status'=>1],
+            ['id'=>1,'name'=>'Admin','type'=>'admin','mobile'=>00000000000,'email'=>'admin@admin.com',
+            'password'=>$password,'image'=>'','status'=>1],
 
             ['id'=>2,'name'=>'Fahim','type'=>'subadmin','mobile'=>1820111111,'email'=>'fahim@subadmin.com',
             'password'=>$password,'image'=>'','status'=>1],

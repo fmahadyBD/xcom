@@ -186,22 +186,20 @@ class AdminController extends Controller
         Session::put('page', 'subadmins');
         $subadmins = Admin::where('type', 'subadmin')->get();
         // use compact for pass the array to blade
-        $cmsPages = CmsPage::get()->toArray();
-
-
-
+        $cmsPages = Admin::get()->toArray();
+        //it will be Subadmin pages
 
 
         $cmspagesModuleCont = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'cms_page'])->count();
         // dd($cmspagesModuleCont);
         if (Auth::guard('admin')->user()->type == 'admin') {
-            $pageModule['view_access'] = 1;
-            $pageModule['edit_access'] = 1;
-            $pageModule['full_access'] = 1;
+            $pageModule['subadmin_view_access'] = 1;
+            $pageModule['subadmin_edit_access'] = 1;
+            $pageModule['subadmin_full_access'] = 1;
             // try to connected to database
 
         } else if ($cmspagesModuleCont == 0) {
-            // } else if ($cmspagesModuleCont == 0) {
+
             $messge = "This feature is restricted for you!";
             // this block for the check any record are exists in the admin_role table or not
             return redirect('/admin/dashboard')->with('error_message', $messge);
@@ -210,15 +208,7 @@ class AdminController extends Controller
         } else {
             $pageModule = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'cms_page'])->first()->toArray();
         }
-
-
-
-
-
-
-
-
-
+        // dd($pageModule); //working fine
 
         return view('admin.subadmins.subadmins')->with(compact('subadmins','cmsPages', 'pageModule'));
     }
@@ -437,10 +427,32 @@ class AdminController extends Controller
             } else {
                 $cms_page_edit = 0;
             }
+
+
             if (isset($data['cms_page']['full_access'])) {
                 $cms_page_full_access = $data['cms_page']['full_access'];
             } else {
                 $cms_page_full_access = 0;
+            }
+
+
+
+
+            if (isset($data['subadmin']['view'])) {
+                $cms_page_Subadmin_view_access	 = $data['subadmin']['view'];
+            } else {
+                $cms_page_Subadmin_view_access	 = 0;
+            }
+            if (isset($data['subadmin']['edit'])) {
+                $cms_page_Subadmin_edit_access = $data['subadmin']['edit'];
+                //name="subadmin[edit] from blade file
+            } else {
+                $cms_page_Subadmin_edit_access = 0;
+            }
+            if (isset($data['subadmin']['full_access'])) {
+                $cms_page_Subadmin_full_access = $data['subadmin']['full_access'];
+            } else {
+                $cms_page_Subadmin_full_access = 0;
             }
 
             $role = new AdminsRole;
@@ -449,6 +461,9 @@ class AdminController extends Controller
             $role->view_access    =  $cms_page_view;
             $role->edit_access    = $cms_page_edit;
             $role->full_access    = $cms_page_full_access;
+            $role->subadmin_view_access  = $cms_page_Subadmin_view_access;
+            $role->subadmin_edit_access   = $cms_page_Subadmin_edit_access;
+            $role->subadmin_full_access   = $cms_page_Subadmin_full_access;
             $role->save();
 
 
