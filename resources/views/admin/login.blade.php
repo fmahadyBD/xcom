@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Log in (v2)</title>
+    <title>Admin Panel | Log in</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -49,7 +49,9 @@
 
                 <form action="{{ url('admin/login') }}" method="post">@csrf
                     <div class="input-group mb-3">
-                        <input name="email" type="email" class="form-control" placeholder="Email"@if (isset($_COOKIE['email'])) value="{{ $_COOKIE['email'] }}" @endif required >
+                        <input name="email" type="email" class="form-control"
+                            placeholder="Email"@if (isset($_COOKIE['email'])) value="{{ $_COOKIE['email'] }}" @endif
+                            required>
 
 
                         <div class="input-group-append">
@@ -59,7 +61,8 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input name="password" type="password" class="form-control" placeholder="Password" @if (isset($_COOKIE['password'])) value="{{ $_COOKIE['password'] }}"     @endif required="">
+                        <input name="password" type="password" class="form-control" placeholder="Password"
+                            @if (isset($_COOKIE['password'])) value="{{ $_COOKIE['password'] }}" @endif required="">
 
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -67,10 +70,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                
-
 
                     <div class="row">
                         <div class="col-8">
