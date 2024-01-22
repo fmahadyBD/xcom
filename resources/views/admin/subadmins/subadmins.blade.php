@@ -75,7 +75,7 @@
                                                         </a>
                                                     @endif
                                                     &nbsp; &nbsp;
-                                                    <a style='color: #3fed3;' href="#">
+                                                    <a style='color: #3fed3;' href="{{url('admin/update-subadmin-Details/'.$subadmin->id)}}">
                                                     <i class="fas fa-edit"></i>
                                                     &nbsp; &nbsp;
                                                     <a style='color: #3fed3;' href="{{url('admin/update-role/'.$subadmin->id)}}">

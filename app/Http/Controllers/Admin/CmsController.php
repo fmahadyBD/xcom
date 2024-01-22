@@ -37,6 +37,7 @@ class CmsController extends Controller
         } else if ($cmspagesModuleCont == 0) {
             // } else if ($cmspagesModuleCont == 0) {
             $messge = "This feature is restricted for you!";
+            // this block for the check any record are exists in the admin_role table or not
             return redirect('/admin/dashboard')->with('error_message', $messge);
 
             // if there have no permission to edit
@@ -51,25 +52,18 @@ class CmsController extends Controller
         //with passed the CmsPages Array
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(CmsPage $cmsPage)
     {
         //

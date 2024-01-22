@@ -424,4 +424,56 @@ class AdminController extends Controller
 
         return view('admin.subadmins.update_role')->with(compact('title', 'id', 'subadminRoles'));
     }
+
+
+
+    // Update the subadmin details
+    public function updateSubadminDetailes($id, Request $request)
+    {
+
+        $admin = Admin::find($id);
+
+        if ($request->isMethod('post')) {
+
+            $data = $request->validate([
+                'name' => 'required|string',
+                'mobile' => 'required|string',
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Adjust this based on your requirements
+                'password' => 'nullable|string|min:6',
+            ]);
+
+            $data = $request->all();
+
+            if ($request->hasFile('image')) {
+                $imageurl = Admin::subadminimageUpload($request);
+            } else {
+                $imageurl = Admin::find($id)->image;
+            }
+
+            if ($request->filled('password')) {
+
+                $hashedPassword = bcrypt($data['password']);
+                $admin->password = $hashedPassword;
+            }
+            $admin->name = $data['name'];
+            $admin->email = Admin::find($id)->email;
+            $admin->mobile = $data['mobile'];
+            $admin->image = $imageurl;
+            $admin->status = 1;
+            $admin->type = 'subadmin';
+            try {
+                $admin->save();
+                return redirect()->back()->with('success_message', 'Update Subadmin data');
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+            }
+        }
+
+        
+        if (view()->exists('admin.subadmins.update_subadmin_details')) {
+            return view('admin.subadmins.update_subadmin_details', compact('id', 'admin'));
+        } else {
+            abort(404); // or handle it in a way that fits your application
+        }
+    }
 }

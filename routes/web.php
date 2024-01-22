@@ -43,6 +43,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get','post'],'add-subadmin/{id?}','AdminController@editSubadmin');
         Route::post('check-email','AdminController@checkemail') ;
         Route::post('check-mobile','AdminController@checkmobilenumber') ;
+        // Route::post('update-subadmin-Details','AdminController@updateSubadminDetailes') ;
+        // Route::match(['get','post'],'update-subadmin-Details/{id?}','AdminController@updateSubadminDetailes');
+        Route::match(['get', 'post'], 'update-subadmin-Details/{id?}', 'AdminController@updateSubadminDetailes')->name('update-subadmin-Details');
         Route::match(['get','post'],'update-role/{id}','AdminController@updateRole');
     });
 });

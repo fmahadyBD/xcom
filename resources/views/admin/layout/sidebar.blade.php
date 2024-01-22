@@ -18,7 +18,7 @@
                             <img src="{{ asset(Auth::guard('admin')->user()->image) }}" class="img-circle elevation-2"
                                 alt="User Image">
                         @else
-                            <img src="{{ url('admin/images/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                            <img src="{{ asset('admin/images/photos/fahimBasic.png') }}" class="img-circle elevation-2"
                                 alt="User Image">
                         @endif
                     </div>
