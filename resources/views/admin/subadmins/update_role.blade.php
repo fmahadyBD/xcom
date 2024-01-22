@@ -118,6 +118,24 @@
                                         &nbsp;&nbsp;&nbsp;
 
                                     </div>
+                                    <hr>
+                                    <div class="form-group">
+                                        <label for="">Subadmins:</label>
+                                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                                        <input type="checkbox" name="subadmin[view]" value="1"
+                                           > &nbsp;View
+                                        &nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox" name="subadmin[edit]"value="1"
+                                           > &nbsp;View/Edit
+                                        Access
+                                        &nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                                        <input type="checkbox" name="subadmin[full_access]"value="1"
+                                           > &nbsp;Full Access
+                                        &nbsp;&nbsp;&nbsp;
+
+                                    </div>
                                     <button type="submit" id="submitBtn" class="btn btn-info btn-flat">Update</button>
                             </div>
 

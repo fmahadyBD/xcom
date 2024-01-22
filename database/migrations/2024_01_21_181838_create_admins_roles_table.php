@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('module');
             $table->string('view_access');
             $table->string('edit_access');
-            $table->string('full_access');
+            $table->string('Subadmin_view_access')->nullable();
+            $table->string('Subadmin_edit_access')->nullable();
+            $table->string('Subadmin_full_access')->nullable();
             $table->timestamps();
         });
     }
