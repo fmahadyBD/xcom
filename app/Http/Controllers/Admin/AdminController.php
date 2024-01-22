@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\AdminsRole;
 use Illuminate\Http\Request;
+use App\Models\CmsPage;
 use Auth;
 use Validator;
 use Hash;
@@ -185,7 +186,41 @@ class AdminController extends Controller
         Session::put('page', 'subadmins');
         $subadmins = Admin::where('type', 'subadmin')->get();
         // use compact for pass the array to blade
-        return view('admin.subadmins.subadmins')->with(compact('subadmins'));
+        $cmsPages = CmsPage::get()->toArray();
+
+
+
+
+
+        $cmspagesModuleCont = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'cms_page'])->count();
+        // dd($cmspagesModuleCont);
+        if (Auth::guard('admin')->user()->type == 'admin') {
+            $pageModule['view_access'] = 1;
+            $pageModule['edit_access'] = 1;
+            $pageModule['full_access'] = 1;
+            // try to connected to database
+
+        } else if ($cmspagesModuleCont == 0) {
+            // } else if ($cmspagesModuleCont == 0) {
+            $messge = "This feature is restricted for you!";
+            // this block for the check any record are exists in the admin_role table or not
+            return redirect('/admin/dashboard')->with('error_message', $messge);
+
+            // if there have no permission to edit
+        } else {
+            $pageModule = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'cms_page'])->first()->toArray();
+        }
+
+
+
+
+
+
+
+
+
+
+        return view('admin.subadmins.subadmins')->with(compact('subadmins','cmsPages', 'pageModule'));
     }
     public function updateSubadminStatus(Request $request)
     {
@@ -433,6 +468,7 @@ class AdminController extends Controller
 
         $admin = Admin::find($id);
 
+
         if ($request->isMethod('post')) {
 
             $data = $request->validate([
@@ -469,7 +505,7 @@ class AdminController extends Controller
             }
         }
 
-        
+
         if (view()->exists('admin.subadmins.update_subadmin_details')) {
             return view('admin.subadmins.update_subadmin_details', compact('id', 'admin'));
         } else {
