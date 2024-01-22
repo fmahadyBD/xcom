@@ -30,9 +30,22 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">CMS PAGES</h3>
-                                <a style="max-width: 150px;float: right;display: inline-block" href="{{url('admin/add-edit-cms-page')}}" class="btn btn-block btn-primary">Add CMS Page</a>
+                                @if ($pageModule['edit_access'] == 1 || $pageModule['full_access'] == 1)
+                                    <a style="max-width: 150px;float: right;display: inline-block"
+                                        href="{{ url('admin/add-edit-cms-page') }}" class="btn btn-block btn-primary">Add
+                                        CMS
+                                        Page</a>
+                                @endif
                             </div>
                             <!-- /.card-header -->
+                            @if (Session::has('error_message'))
+                                <div class="alert alert-warning alert-denger fade show" role="alert">
+                                    <strong>Error:</strong> {{ Session::get('error_message') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
                             <div class="card-body">
                                 <table id="cmspages" class="table table-bordered table-striped">
                                     <thead>
@@ -50,35 +63,41 @@
                                                 <td>{{ $page['id'] }}</td>
                                                 <td>{{ $page['title'] }}</td>
                                                 <td>{{ $page['url'] }}</td>
-                                                <td>{{ date("F j,Y,g:i a",strtotime($page['created_at'])) }}</td>
+                                                <td>{{ date('F j,Y,g:i a', strtotime($page['created_at'])) }}</td>
                                                 <td>
-                                                    @if ($page['status'] == 1)
-                                                        <a class="updateCmsPageStatus" id="page-{{ $page['id'] }}"
-                                                            page_id="{{ $page['id'] }}" href="javascript:void(0)">
-                                                            <i class="fas fa-toggle-on" status="Active"></i>
-                                                        </a>
-                                                    @else
-                                                        <a class="updateCmsPageStatus" id="page-{{ $page['id'] }}"
-                                                            page_id="{{ $page['id'] }}" style="color: gray"
-                                                            href="javascript:void(0)">
-                                                            <i class="fas fa-toggle-off" status="Inactive"></i>
+
+                                                    @if ($pageModule['edit_access'] == 1 || $pageModule['full_access'] == 1)
+                                                        @if ($page['status'] == 1)
+                                                            <a class="updateCmsPageStatus" id="page-{{ $page['id'] }}"
+                                                                page_id="{{ $page['id'] }}" href="javascript:void(0)">
+                                                                <i class="fas fa-toggle-on" status="Active"></i>
+                                                            </a>
+                                                        @else
+                                                            <a class="updateCmsPageStatus" id="page-{{ $page['id'] }}"
+                                                                page_id="{{ $page['id'] }}" style="color: gray"
+                                                                href="javascript:void(0)">
+                                                                <i class="fas fa-toggle-off" status="Inactive"></i>
+                                                            </a>
+                                                        @endif
+                                                    @endif
+                                                    &nbsp; &nbsp;
+
+                                                    @if ($pageModule['edit_access'] == 1 || $pageModule['full_access'] == 1)
+                                                        <a style='color: #3fed3;'
+                                                            href="{{ url('admin/add-edit-cms-page/' . $page['id']) }}">
+                                                            <i class="fas fa-edit"></i>
                                                         </a>
                                                     @endif
                                                     &nbsp; &nbsp;
-                                                    <a style='color: #3fed3;' href="{{url('admin/add-edit-cms-page/'.$page['id'])}}">
-                                                    <i class="fas fa-edit"></i>
-                                                    &nbsp; &nbsp;
-                                                    <a  style='color: red;'
-                                                    class="confirmedDelete" name="Delete CMS Page" title="Delete CMS Page"
 
-                                                    href="javascript:void(0)" record="cms-page" recordid={{$page['id']}}
-
-                                                    {{-- href="{{url('admin/delete-cms-page/'.$page['id'])}}" --}}
-
-
-                                                    >
-                                                    <i class="fas fa-trash"></i>
-                                                    </a>
+                                                    @if ($pageModule['full_access'] == 1)
+                                                        <a style='color: red;' class="confirmedDelete"
+                                                            name="Delete CMS Page" title="Delete CMS Page"
+                                                            href="javascript:void(0)" record="cms-page"
+                                                            recordid={{ $page['id'] }} {{-- href="{{url('admin/delete-cms-page/'.$page['id'])}}" --}}>
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    @endif
 
 
 

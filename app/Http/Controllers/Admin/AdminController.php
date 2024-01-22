@@ -270,12 +270,16 @@ class AdminController extends Controller
             } else {
                 $imageUrl = $subadmin->image; // Make sure $subadmin is defined
             }
+            // this is for added password into the hash
+            $hashedPassword = bcrypt($data['password']);
+            $subadmin->password = $hashedPassword;
+
 
             // Save other fields
             $subadmin->name = $data['name'];
             $subadmin->email = $data['email'];
             $subadmin->mobile = $data['smobile'];
-            $subadmin->password = $data['password'];
+            // $subadmin->password = $data['password'];
             $subadmin->type = 'subadmin';
             $subadmin->status = 1;
             $subadmin->image = $imageUrl;
@@ -340,10 +344,10 @@ class AdminController extends Controller
     // update the role:
     public function updateRole($id, Request $request)
     {
-        // this will be show title on subadmin 
+        // this will be show title on subadmin
         $subadminRoles = AdminsRole::where('subadmin_id', $id)->get()->toArray();
-        $subadminDetails=Admin::where('id',$id)->first()->toArray();
-        $title = "Update ". $subadminDetails['name']." Subadmin Roles/Permission";
+        $subadminDetails = Admin::where('id', $id)->first()->toArray();
+        $title = "Update " . $subadminDetails['name'] . " Subadmin Roles/Permission";
 
         //   dd($subadminRoles);
         // dd to check the
@@ -358,59 +362,59 @@ class AdminController extends Controller
 
 
             // dynamic
-            foreach($data as $key=>$value){
-                if(isset($value['view'])){
-                    $view=$value['view'];
-                }else{
-                    $view=0;
-                }
-                if(isset($value['edit'])){
-                    $edit=$value['edit'];
-                }else{
-                    $edit=0;
-                }
-                if(isset($value['full_access'])){
-                    $full_access=$value['full_access'];
-                }else{
-                    $full_access=0;
-                }
-            }
-       // make dynamic
-       $role = new AdminsRole;
-       $role->subadmin_id    = $id;
-       $role->module    = $key;
-       $role->view_access    =  $view;
-       $role->edit_access    = $edit;
-       $role->full_access    = $full_access;
-       $role->save();
+            // foreach ($data as $key => $value) {
+            //     if (isset($value['view'])) {
+            //         $view = $value['view'];
+            //     } else {
+            //         $view = 0;
+            //     }
+            //     if (isset($value['edit'])) {
+            //         $edit = $value['edit'];
+            //     } else {
+            //         $edit = 0;
+            //     }
+            //     if (isset($value['full_access'])) {
+            //         $full_access = $value['full_access'];
+            //     } else {
+            //         $full_access = 0;
+            //     }
+            // }
+            // // make dynamic
+            // $role = new AdminsRole;
+            // $role->subadmin_id    = $id;
+            // $role->module    = $key;
+            // $role->view_access    =  $view;
+            // $role->edit_access    = $edit;
+            // $role->full_access    = $full_access;
+            // $role->save();
 
 
             AdminsRole::where('subadmin_id', $id)->delete();
             // added the new value
             // check thee cms_page view hase value?
-            // if (isset($data['cms_page']['view'])) {
-            //     $cms_page_view = $data['cms_page']['view'];;
-            // } else {
-            //     $cms_page_view = 0;
-            // }
-            // if (isset($data['cms_page']['edit'])) {
-            //     $cms_page_edit = $data['cms_page']['edit'];
-            // } else {
-            //     $cms_page_edit = 0;
-            // }
-            // if (isset($data['cms_page']['full_access'])) {
-            //     $cms_page_full_access = $data['cms_page']['full_access'];
-            // } else {
-            //     $cms_page_full_access = 0;
-            // }
+            if (isset($data['cms_page']['view'])) {
+                $cms_page_view = $data['cms_page']['view'];;
+            } else {
+                $cms_page_view = 0;
+            }
+            if (isset($data['cms_page']['edit'])) {
+                $cms_page_edit = $data['cms_page']['edit'];
+            } else {
+                $cms_page_edit = 0;
+            }
+            if (isset($data['cms_page']['full_access'])) {
+                $cms_page_full_access = $data['cms_page']['full_access'];
+            } else {
+                $cms_page_full_access = 0;
+            }
 
-            // $role = new AdminsRole;
-            // $role->subadmin_id    = $id;
-            // $role->module    = 'cms_page';
-            // $role->view_access    =  $cms_page_view;
-            // $role->edit_access    = $cms_page_edit;
-            // $role->full_access    = $cms_page_full_access;
-            // $role->save();
+            $role = new AdminsRole;
+            $role->subadmin_id    = $id;
+            $role->module    = 'cms_page';
+            $role->view_access    =  $cms_page_view;
+            $role->edit_access    = $cms_page_edit;
+            $role->full_access    = $cms_page_full_access;
+            $role->save();
 
 
 
