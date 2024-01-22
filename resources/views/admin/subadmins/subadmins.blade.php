@@ -30,7 +30,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Sub Admins</h3>
-                                @if ($pageModule['subadmin_edit_access'] == 1 || $pageModule['subadmin_full_access'] == 1)
+                                @if ($subadmin_access_module['subadmin_edit_access'] == 1 || $subadmin_access_module['subadmin_full_access'] == 1)
                                     <a style="max-width: 150px;float: right;display: inline-block"
                                         href="{{ url('/admin/add-subadmin') }}" class="btn btn-block btn-primary">Add Sub
                                         Admin</a>
@@ -63,7 +63,7 @@
 
                                                 <td>{{ date('F j,Y,g:i a', strtotime($subadmin->created_at)) }}</td>
                                                 <td>
-                                                    @if ($pageModule['subadmin_edit_access'] == 1 || $pageModule['subadmin_full_access'] == 1)
+                                                    @if ($subadmin_access_module['subadmin_edit_access'] == 1 || $subadmin_access_module['subadmin_full_access'] == 1)
                                                         @if ($subadmin->status == 1)
                                                             <a class="updateSubadminsStatus"
                                                                 id="subadmin-{{ $subadmin->id }}"
@@ -83,7 +83,7 @@
 
 
                                                     &nbsp; &nbsp;
-                                                    @if ($pageModule['subadmin_edit_access'] == 1 || $pageModule['subadmin_full_access'] == 1)
+                                                    @if ($subadmin_access_module['subadmin_edit_access'] == 1 || $subadmin_access_module['subadmin_full_access'] == 1)
                                                         <a style='color: #3fed3;'
                                                             href="{{ url('admin/update-subadmin-Details/' . $subadmin->id) }}">
                                                             <i class="fas fa-edit"></i>
@@ -92,7 +92,7 @@
 
 
                                                     &nbsp; &nbsp;
-                                                    @if ($pageModule['subadmin_full_access'] == 1)
+                                                    @if ($subadmin_access_module['subadmin_full_access'] == 1)
                                                         <a style='color: #3fed3;'
                                                             href="{{ url('admin/update-role/' . $subadmin->id) }}">
                                                             <i class="fas fa-unlock"></i></a>

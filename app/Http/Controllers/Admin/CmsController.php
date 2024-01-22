@@ -19,34 +19,27 @@ class CmsController extends Controller
     public function index()
     {
         Session::put('page', 'cms-pages');
+        $cmsPages = CmsPage::get()->toArray(); // Make it as an array
 
-        $cmsPages = CmsPage::get()->toArray();
-
-        // give the permission to change the cms pages or not:
-
-
-
+        // give the permission to change the cms pages or not: count any permission is in Admin Role or not? if it have any then wokred or redirect
         $cmspagesModuleCont = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'cms_page'])->count();
         // dd($cmspagesModuleCont);
+        // this for degub the code
         if (Auth::guard('admin')->user()->type == 'admin') {
             $pageModule['view_access'] = 1;
             $pageModule['edit_access'] = 1;
             $pageModule['full_access'] = 1;
-            // try to connected to database
+            // try to set this value is 1. this manually set for admin
 
         } else if ($cmspagesModuleCont == 0) {
             // } else if ($cmspagesModuleCont == 0) {
             $messge = "This feature is restricted for you!";
             // this block for the check any record are exists in the admin_role table or not
             return redirect('/admin/dashboard')->with('error_message', $messge);
-
             // if there have no permission to edit
         } else {
             $pageModule = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'cms_page'])->first()->toArray();
         }
-
-
-
         // dd($cmsPages);
         return view('admin.pages.cms-pages')->with(compact('cmsPages', 'pageModule'));
         //with passed the CmsPages Array
@@ -114,9 +107,6 @@ class CmsController extends Controller
         // pass korlam cmpage
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request)
     {
         Session::put('page', 'cms-pages');
@@ -134,9 +124,6 @@ class CmsController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         //delete

@@ -10,37 +10,27 @@ use App\Models\CmsPage;
 use Auth;
 use Validator;
 use Hash;
-use image;
-
-
 use Session;
-
-use function Laravel\Prompts\alert;
-
-// Sir this 'image' create the problem in this project. I
-
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
         Session::put('page', 'dashboard');
-
-
+        // This Crate a seection for show the active file.
         return view('admin.dashboard');
+        // return a bade file for view
     }
     public function login(Request $request)
     {
 
-
         Session::put('page', 'login');
-
         if ($request->isMethod('post')) {
+            // Route is match. that's why we need to check method are post or get. it saparete get and post
             $data = $request->all();
-            echo "<pre>";
-            print_r($data);
-
-
+            // echo "<pre>";
+            // print_r($data);
+            // Give some rules for validation of input
             $rules = [
 
                 'email' => 'required|email|max:255',
@@ -52,11 +42,11 @@ class AdminController extends Controller
                 'email.email' => 'valied is required',
                 'password.required' => 'password is required',
             ];
+            //this will print data in blade file error or success message. validate muust passed by whit(....,'message to show')
             $this->validate($request, $rules, $customMessages);
 
+            // this is for set the cookies for remeber me function
             if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
-
-
                 // Remember Admin Email & password with cookies
                 if (isset($data['remember']) && !empty($data['remember'])) {
                     setcookie("email", $data['email'], time() + 3600);
@@ -66,7 +56,6 @@ class AdminController extends Controller
                     setcookie("password", "");
                 }
 
-
                 return redirect("admin/dashboard");
             } else {
                 return redirect()->back()->with("error_message", "invalied Email of Password");
@@ -74,10 +63,6 @@ class AdminController extends Controller
         }
         return view('admin.login');
     }
-
-
-
-
 
     public function logout()
     {
@@ -89,15 +74,19 @@ class AdminController extends Controller
 
         Session::put('page', 'updatepassword');
 
-
         if ($request->isMethod('post')) {
+            // Route is match. that's why we need to check method are post or get. it saparete get and post
             $data = $request->all();
+            // Take data from submit the form through request
             //check if current password is correct
             if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) {
+                // ',' means this is == for checking the password both are equal
                 //check if new password and confirmed password is same
                 if ($data['new_password'] == $data['confirmed_password']) {
+                    // this means the two input fild data is match or not
                     //update new password
                     Admin::where('id', Auth::guard('admin')->user()->id)->update(['password' => bcrypt($data['new_password'])]);
+                    // update the from by make the data as bcrypt formate. after new need to hash for decript
                     return redirect()->back()->with('success_message', 'your new password hass been updated!');
                 } else {
                     return redirect()->back()->with('error_message', 'your new password is  and comfirmed password is not match');
@@ -110,16 +99,12 @@ class AdminController extends Controller
         return view('admin.update_password');
     }
 
-
-
-
+    // ------------>> this function for the custom.js file to retunr true or fale?
     public function checkCurrentPassword(Request $request)
     {
         // check the current password and given password are same or not
         $data = $request->all();
         // this funtion is not define as post mehton that's why we cheeck every data and find the email
-
-
         if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) {
             return "true";
         } else {
@@ -127,11 +112,10 @@ class AdminController extends Controller
         }
     }
 
-
-
     public function edit(Request $request)
     {
 
+        // i am try to edit the admin details by separate two get,post method without use match
         Session::put('page', 'updatedetails');
         return view('admin.update_details');
     }
@@ -143,7 +127,6 @@ class AdminController extends Controller
         Session::put('page', 'updatedetails');
 
         $rules = [
-
             // 'admin_name'=>'required|alpha|max:255',
             'admin_name' => 'required|regex:/^[\pL\s\-]+$/u|max:255',
             //alpha will not accept the spaces
@@ -169,36 +152,43 @@ class AdminController extends Controller
         // it will print the error in from
 
         if ($request->isMethod('post')) {
+            // checked not need beacuse this is must define as a post from web
             $admin = Auth::guard('admin')->user();
             $id = $admin->id;
             if ($admin) {
                 // check the admin in avelable
-
                 // Call the updateDetails method on the Admin model with the $id parameter
                 $admin->updateDetailsx($request, $id);
-                // check the current password and the same or nott
+                // this is fnction to retunr true or false for customjs
+                // check the current password and the same or not
             }
         }
         return redirect()->back()->with('success_message', 'true');
     }
+
+
+
     public function subAdmins()
     {
+
         Session::put('page', 'subadmins');
-        $subadmins = Admin::where('type', 'subadmin')->get();
+        $subadmins = Admin::where('type', 'subadmin')->get(); // it will call al the subadmin to subadmins array, it will pass to array for print the list of subadminsby tabel
+
+        // what is the work of this function. this is actually retun the list of Subadmins. we need to give the permission
+        // to subadmin can access edit,update,delete function or not by condition
+
         // use compact for pass the array to blade
-        $cmsPages = Admin::get()->toArray();
+        // $cmsPages = Admin::get()->toArray(); // comment it to prove it have not work in function or  in its balde
         //it will be Subadmin pages
-
-
-        $cmspagesModuleCont = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'cms_page'])->count();
+        $subadmin_are_in_Adminrole_count = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'cms_page'])->count();
         // dd($cmspagesModuleCont);
         if (Auth::guard('admin')->user()->type == 'admin') {
-            $pageModule['subadmin_view_access'] = 1;
-            $pageModule['subadmin_edit_access'] = 1;
-            $pageModule['subadmin_full_access'] = 1;
-            // try to connected to database
+            $subadmin_access_module['subadmin_view_access'] = 1;
+            $subadmin_access_module['subadmin_edit_access'] = 1;
+            $subadmin_access_module['subadmin_full_access'] = 1;
+            // make index of
 
-        } else if ($cmspagesModuleCont == 0) {
+        } else if ($subadmin_are_in_Adminrole_count == 0) {
 
             $messge = "This feature is restricted for you!";
             // this block for the check any record are exists in the admin_role table or not
@@ -206,12 +196,17 @@ class AdminController extends Controller
 
             // if there have no permission to edit
         } else {
-            $pageModule = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'cms_page'])->first()->toArray();
+            $subadmin_access_module = AdminsRole::where(['subadmin_id' => Auth::guard('admin')->user()->id, 'module' => 'cms_page'])->first()->toArray();
         }
-        // dd($pageModule); //working fine
+        // dd($subadmin_access_module); //working fine
 
-        return view('admin.subadmins.subadmins')->with(compact('subadmins','cmsPages', 'pageModule'));
+        return view('admin.subadmins.subadmins')->with(compact('subadmins',  'subadmin_access_module'));
+        // 'cmsPages',
     }
+
+
+
+
     public function updateSubadminStatus(Request $request)
     {
         Session::put('page', 'cms-pages');
@@ -231,13 +226,7 @@ class AdminController extends Controller
             return response()->json(['status' => $status, 'subadmin_id' => $data['subadmin_id']]);
         }
     }
-    public function deleteSubadminx($id)
-    {
 
-        // delete the sub admin
-        Admin::where('id', $id)->delete();
-        return redirect()->back()->with('success_message', 'Subadmin delete successfuly');
-    }
     public function deletesbadmin($id)
     {
         //delete
@@ -247,8 +236,6 @@ class AdminController extends Controller
 
 
     // add subadmin
-
-
     public function editSubadmin(Request $request, $id = null)
     {
         Session::put('page', 'cms-pages');
@@ -258,6 +245,7 @@ class AdminController extends Controller
             // Load form for editing subadmin
             $title = "Edit Subadmin";
             $subadmin = Admin::find($id);
+            // if there have idthen find by this id of the suadmin to
             $message = "SubadminUpdated successfully";
         } else {
             // Load form for adding subadmin
@@ -344,25 +332,21 @@ class AdminController extends Controller
         } else {
             return "false";
         }
+        // this fnction for custom.js to check the email are already in database or not
     }
 
     public function checkmobilenumber(Request $request)
     {
         // call ervey data data from request
         $data = $request->all();
-
-
-        //
         $mobile = $data['smobile'];
-
         $count = strlen($mobile);
-
-
         if ($count > 10) {
             return "true";
         } else {
             return "false";
         }
+        // this fnction for custom.js to check the mobile number digits are 10 more not not!
     }
 
 
@@ -428,34 +412,35 @@ class AdminController extends Controller
                 $cms_page_edit = 0;
             }
 
-
             if (isset($data['cms_page']['full_access'])) {
                 $cms_page_full_access = $data['cms_page']['full_access'];
             } else {
                 $cms_page_full_access = 0;
             }
 
-
-
-
-            if (isset($data['subadmin']['view'])) {
-                $cms_page_Subadmin_view_access	 = $data['subadmin']['view'];
+            //['cms_page']['full_access'] or ['subadmin']['subadmin_view_access'] other, are from the blade file to save it. this condition are under the post
+            if (isset($data['subadmin']['subadmin_view_access'])) {
+                $cms_page_Subadmin_view_access     = $data['subadmin']['subadmin_view_access'];
             } else {
-                $cms_page_Subadmin_view_access	 = 0;
+                $cms_page_Subadmin_view_access     = 0;
             }
-            if (isset($data['subadmin']['edit'])) {
-                $cms_page_Subadmin_edit_access = $data['subadmin']['edit'];
+            if (isset($data['subadmin']['subadmin_edit_access'])) {
+                $cms_page_Subadmin_edit_access = $data['subadmin']['subadmin_edit_access'];
                 //name="subadmin[edit] from blade file
             } else {
                 $cms_page_Subadmin_edit_access = 0;
             }
-            if (isset($data['subadmin']['full_access'])) {
-                $cms_page_Subadmin_full_access = $data['subadmin']['full_access'];
+            if (isset($data['subadmin']['subadmin_full_access'])) {
+                $cms_page_Subadmin_full_access = $data['subadmin']['subadmin_full_access'];
             } else {
                 $cms_page_Subadmin_full_access = 0;
             }
-
+            //role is array
+            //-> is index of role that is the column name of database
+            //right side of the =, is the varibale that we define in preious line.
+            //
             $role = new AdminsRole;
+            // it create new AdminRole database row to sotre new one, we delete rows of privous recored by delete
             $role->subadmin_id    = $id;
             $role->module    = 'cms_page';
             $role->view_access    =  $cms_page_view;
@@ -466,12 +451,11 @@ class AdminController extends Controller
             $role->subadmin_full_access   = $cms_page_Subadmin_full_access;
             $role->save();
 
-
-
             $message = "Subadmin Role Update sccessfully";
             return redirect()->back()->with('success_message', $message);
         }
-
+        // SubadminRoles array will recived as role to check database this is checked or not form databse
+        // compact is the passing process controller ot blade file. we recive this by name in blade file
         return view('admin.subadmins.update_role')->with(compact('title', 'id', 'subadminRoles'));
     }
 
@@ -482,8 +466,6 @@ class AdminController extends Controller
     {
 
         $admin = Admin::find($id);
-
-
         if ($request->isMethod('post')) {
 
             $data = $request->validate([
@@ -519,8 +501,7 @@ class AdminController extends Controller
                 dd($e->getMessage());
             }
         }
-
-
+        // this will cheecked the view file is exits or not
         if (view()->exists('admin.subadmins.update_subadmin_details')) {
             return view('admin.subadmins.update_subadmin_details', compact('id', 'admin'));
         } else {

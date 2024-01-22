@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>AdminLTE 3 | Dashboard 2</title>
+    <title>Admin Panel | Dashboard</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -18,9 +18,9 @@
     <link rel="stylesheet" href="{{ url('admin/css/adminlte.min.css') }}">
 
 
- <!-- Select2 -->
- <link rel="stylesheet" href="{{ url('admin/plugins/select2/css/select2.min.css') }}">
- <link rel="stylesheet" href="{{ url('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ url('admin/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
 </head>
 
@@ -36,9 +36,6 @@
         @include('admin.layout.header')
         @include('admin.layout.sidebar')
         @yield('content')
-
-
-
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
@@ -69,53 +66,35 @@
     <script src="{{ url('admin/plugins/jquery-mapael/jquery.mapael.min.js') }}"></script>
     <script src="{{ url('admin/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
 
-
-
     <!-- ChartJS -->
     <script src="{{ url('admin/plugins/chart.js/Chart.min.js') }}"></script>
-
-    <!-- AdminLTE for demo purposes -->
-    {{-- <script src="{{ url('admin/js/demo.js') }}"></script> --}}
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ url('admin/js/pages/dashboard2.js') }}"></script>
     <!-- custom je -->
     <script src="{{ url('admin/js/custom.js') }}"></script>
-
-
-
     {{-- For the table --}}
 
-<script src="{{ url('admin/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{ url('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{ url('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script>
-    $(function () {
-      $("#cmspages").DataTable();
+    <script src="{{ url('admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script>
+        $(function() {
+            $("#cmspages").DataTable();
+            $("#subadmins").DataTable();
+        });
+    </script>
 
+    <!-- Select2 -->
+    <script src="{{ url('admin/plugins/select2/js/select2.full.min.js') }}"></script>
 
-      $("#subadmins").DataTable();
-    });
-  </script>
+    <script>
+        $('.select2').select2();
+    </script>
 
+    {{-- The sweer alret --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- Select2 -->
-<script src="{{ url('admin/plugins/select2/js/select2.full.min.js')}}"></script>
-
-<script>
-
-$('.select2').select2();
-</script>
-
-{{-- The sweer alret --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Your custom script -->
-
-
-
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 
 </html>
