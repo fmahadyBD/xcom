@@ -98,11 +98,7 @@
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     @endif
-
-
-
                                                 </td>
-
                                             </tr>
                                         @endforeach
 
