@@ -142,8 +142,43 @@ $(document).ready(function () {
         });
     });
 
-    //updat ethe sub domain
+// Upadate Catgory Status
+    $(document).on("click", ".updateCategoriesStatus", function () {
+        // Get the status and page_id attributes from the clicked element
+        var status = $(this).children("i").attr("status");
+        var category_id = $(this).attr("category_id");
+        var status = $(this).children("i").attr("status");
+        var category_id = $(this).attr("category_id");
 
+
+
+        // Make an AJAX request to update the Category status
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            type: "post",
+            url: "/admin/update-category-status",
+            data: { status: status, category_id: category_id },
+            success: function (resp) {
+                // Handle success response
+                if (resp["status"] == 0) {
+                    $("#category-" + category_id).html(
+                        "<i class='fas fa-toggle-off' style='color:grey' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#category-" + category_id).html(
+                        "<i class='fas fa-toggle-on' style='color: blue' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("Error");
+            },
+        });
+    });
+
+    //update  the subadmin
     $(document).on("click", ".updateSubadminsStatus", function () {
         var status = $(this).children("i").attr("status");
         var subadmin_id = $(this).attr("subadmin_id");
@@ -194,6 +229,32 @@ $(document).ready(function () {
         // return false;
 
         //confirmed delete with sweetalret
+
+        var record = $(this).attr("record");
+        var recordid = $(this).attr("recordid");
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success",
+                });
+                window.location.href =
+                    "/admin/delete-" + record + "/" + recordid;
+            }
+        });
+    });
+
+    // delete category
+    $(document).on("click", ".confirmedDeleteCategory", function () {
 
         var record = $(this).attr("record");
         var recordid = $(this).attr("recordid");

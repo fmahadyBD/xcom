@@ -63,12 +63,12 @@
                                                 <td>{{ date('F j, Y, g:i a', strtotime($key['created_at'])) }}</td>
                                                 <td>
                                                     @if ($key['status'] == 1)
-                                                        <a class="" id="{{ $key['id'] }}"
+                                                        <a class="updateCategoriesStatus" id="category-{{ $key['id'] }}"category_id="{{ $key['id'] }}"
                                                             page_id="{{ $key['id'] }}" href="javascript:void(0)">
                                                             <i class="fas fa-toggle-on" status="Active"></i>
                                                         </a>
                                                     @else
-                                                        <a class="" id="{{ $key['id'] }}"
+                                                        <a class="updateCategoriesStatus" id="category-{{ $key['id'] }}"category_id="{{ $key['id'] }}"
                                                             page_id="{{ $key['id'] }}" style="color: gray"
                                                             href="javascript:void(0)">
                                                             <i class="fas fa-toggle-off" status="Inactive"></i>
@@ -79,8 +79,8 @@
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     &nbsp; &nbsp;
-                                                    <a style='color: red;' class="confirmedDelete" href="javascript:void(0)"
-                                                        record="{{-- Your record data here --}}" recordid="{{ $key['id'] }}">
+                                                    <a style='color: red;' class="confirmedDeleteCategory" href="javascript:void(0)"
+                                                        record="category" recordid="{{ $key['id'] }}">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
 
