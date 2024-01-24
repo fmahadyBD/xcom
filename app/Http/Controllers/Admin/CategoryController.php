@@ -39,31 +39,20 @@ class CategoryController extends Controller
 
     public function editAddSubadmin(Request $request, $id = null)
     {
-        if ($id) {
-            // Load form for editing categoryEA
-            $title = "Edit Category";
-            $categoryEA = Category::find($id);
-            // if there have id then find by this id of the suadmin to
-            $message = "Category Update successfully";
-            $parentCategories = Category::where('id', '!=', $id)->get();
-            $x = true;
-        } else {
-            // Load form for adding categoryEA
-            $title = "ADD Category ";
-            $categoryEA = new Category();
-            $message = "Category Added successfully";
-            $x = false;
-            $parentCategories = Category::all(); // Assuming you want all categories for the parent selector
-        }
+        $title = $id ? "Edit Category" : "Add Category";
+        $categoryEA = $id ? Category::find($id) : new Category();
+        $message = $id ? "Category Updated successfully" : "Category Added successfully";
+        $x = true;
+
+        $parentCategories = Category::where('id', '!=', $id)->get();
 
         if ($request->isMethod('post')) {
             $data = $request->all();
-            // dd($data);
-            // die;
+
             if ($request->hasFile('image')) {
                 $imageUrl = Category::subadminimageUpload($request);
             } else {
-                $imageUrl = $categoryEA->image; // Make sure $subadmin is defined
+                $imageUrl = $categoryEA->image;
             }
 
             $categoryEA->category_name = $data['category_name'];
@@ -73,22 +62,42 @@ class CategoryController extends Controller
             $categoryEA->meta_title = $data['meta_title'];
             $categoryEA->meta_description = $data['meta_description'];
             $categoryEA->meta_keywords = $data['meta_keywords'];
+
             if ($request->has('is_parent_category')) {
                 $categoryEA->parent_id = 0;
             } else {
                 $categoryEA->parent_id = $data['parent_category_id'];
             }
 
-                  $categoryEA->image = $imageUrl;
+            $categoryEA->image = $imageUrl;
             $categoryEA->status = 1;
+
             try {
                 $result = $categoryEA->save();
-                return redirect()->back()->with('success_message', 'Added Sussessfully');
+                return redirect()->back()->with('success_message', $message);
             } catch (\Exception $e) {
                 dd($e->getMessage());
             }
         }
 
+        // Adding 'level' property to each category for hierarchical structure
+        $parentCategories = $this->addLevelToCategories($parentCategories);
+
         return view('admin.categories.add_edit_categories', compact('title', 'categoryEA', 'parentCategories', 'x'));
     }
+
+    private function addLevelToCategories($categories, $parent_id = 0, $level = 0)
+    {
+        $result = [];
+        foreach ($categories as $category) {
+            if ($category->parent_id == $parent_id) {
+                $category->level = $level;
+                $result[] = $category;
+                $result = array_merge($result, $this->addLevelToCategories($categories, $category->id, $level + 1));
+            }
+        }
+        return $result;
+    }
+
+
 }
