@@ -126,14 +126,25 @@
                                             @if ($x)
                                                 <div class="form-group" id="parentCategorySelector"
                                                     @if ($categoryEA['parent_id'] == 0 || old('is_parent_category') == 1) style="display: none;" @endif>
-                                                    <label for="parent_category_id">Parent Category</label>
-                                                    <select class="form-control" id="parent_category_id"
+
+                                                    <label for="parent_category_id input-group-text bg-secondary text-white">Parent Category</label>
+                                                    <select class="form-control " id="parent_category_id"
                                                         name="parent_category_id">
                                                         <option value="">Select Parent Category</option>
                                                         @foreach ($parentCategories as $parentCategory)
                                                             <option value="{{ $parentCategory['id'] }}"
                                                                 @if ($categoryEA['parent_id'] == $parentCategory['id']) selected @endif>
-                                                                {{ $parentCategory['category_name'] }}
+                                                                @if ($parentCategory['parent_id'] == 0)
+                                                                    {{ $parentCategory['category_name'] }}
+                                                                @else
+                                                                    &nbsp; &nbsp; &nbsp; &nbsp; {{-- Add more spaces based on your preference --}}
+                                                                    @for ($i = 0; $i < $parentCategory['level']; $i++)
+                                                                        &nbsp; &nbsp; &nbsp; &nbsp;
+                                                                    @endfor
+
+
+                                                                    -> {{ $parentCategory['category_name'] }}
+                                                                @endif
                                                             </option>
                                                         @endforeach
                                                     </select>
