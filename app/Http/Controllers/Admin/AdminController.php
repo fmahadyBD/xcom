@@ -251,7 +251,7 @@ class AdminController extends Controller
             // Load form for adding subadmin
             $title = "ADD Subadmin ";
             $subadmin = new Admin();
-            $message = "SubadminAdded successfully";
+            $message = "Subadmin Added successfully";
         }
 
 

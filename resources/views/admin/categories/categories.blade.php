@@ -28,7 +28,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Category Page</h3>
-                                <a style="max-width: 150px;float: right;display: inline-block" href="#"
+                                <a style="max-width: 150px;float: right;display: inline-block" href="{{ url('/admin/add-edit-category') }}"
                                     class="btn btn-block btn-primary">Add Category</a>
 
                             </div>
@@ -75,7 +75,7 @@
                                                         </a>
                                                     @endif
                                                     &nbsp; &nbsp;
-                                                    <a style='color: #3fed3;' href="{{-- Your edit URL here --}}">
+                                                    <a style='color: #3fed3;' href="{{ route('add-edit-category', ['id' => $key['id']]) }}">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     &nbsp; &nbsp;
