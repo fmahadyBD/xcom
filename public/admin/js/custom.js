@@ -1,4 +1,20 @@
 $(document).ready(function () {
+
+
+    $(document).ready(function () {
+        // Toggle visibility of the parent category selector based on the checkbox
+        $('#is_parent_category').change(function () {
+            if ($(this).is(':checked')) {
+                $('#parentCategorySelector').hide();
+                $('#parent_category_id').val(''); // Reset the selected value
+            } else {
+                $('#parentCategorySelector').show();
+            }
+        });
+    });
+
+
+
     $("#current_password").keyup(function () {
         var current_password = $("#current_password").val();
 
