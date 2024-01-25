@@ -149,7 +149,7 @@
                                     @php $active="" @endphp
                                 @endif
                                 <li class="nav-item">
-                                    <a href="" class="nav-link  {{ $active }}">
+                                    <a href="{{route('products-page')}}" class="nav-link  {{ $active }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Products</p>
                                     </a>

@@ -223,6 +223,36 @@ $(document).ready(function () {
             },
         });
     });
+    // update the products status
+    $(document).on("click", ".UpdateproductStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var product_id = $(this).attr("product_id");
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            type: "post",
+            url: "/admin/update-products-status",
+            data: { status: status, product_id: product_id },
+            success: function (resp) {
+                // Handle success response
+                if (resp["status"] == 0) {
+                    $("#product-" + product_id).html(
+                        "<i class='fas fa-toggle-off' style='color:grey' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#product-" + product_id).html(
+                        "<i class='fas fa-toggle-on' style='color: blue' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("Error");
+            },
+        });
+    });
+
 
     // simple jequree the delete the cms page
     $(document).on("click", ".confirmedDelete", function () {
@@ -322,4 +352,14 @@ $(document).ready(function () {
     });
 
 
+});
+
+$(document).ready(function() {
+    // Handle radio button clicks
+    $('.form-check-input').click(function() {
+        // If the radio button is already checked, uncheck it
+        if ($(this).prop('checked')) {
+            $(this).prop('checked', false);
+        }
+    });
 });
