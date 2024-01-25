@@ -61,6 +61,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         //product
         Route::get('/products-page', [ProductController::class, 'productsf'])->name('products-page');
+        Route::get('delete-product/{id?}','ProductController@destroy');
 
     });
 });

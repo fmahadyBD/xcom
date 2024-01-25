@@ -18,4 +18,13 @@ class ProductController extends Controller
 
         return view('admin.product.product')->with(compact('products', 'categories'));
     }
+
+
+    public function destroy($id){
+        Product::where('id', $id)->delete();
+        return redirect()->back()->with('success_message', 'Product delete successfuly');
+
+    }
+
+    
 }

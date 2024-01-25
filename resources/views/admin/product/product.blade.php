@@ -81,7 +81,7 @@
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     &nbsp; &nbsp;
-                                                    <a style='color: red;' class="confirmedDeleteCategory"
+                                                    <a style='color: red;' class="confirmedDeleteProduct"
                                                         href="javascript:void(0)" record="product"
                                                         recordid="{{ $key['id'] }}">
                                                         <i class="fas fa-trash"></i>
