@@ -11,8 +11,9 @@ class DatabaseSeeder extends Seeder
         // after 16
         // why in here problem?
 
-        $this->call(AdminsTableSeeder::class);
-        $this->call(CmsPageTableSeeder::class);
-        $this->call(CategoryTableSeeder::class);
+        // $this->call(AdminsTableSeeder::class);
+        // $this->call(CmsPageTableSeeder::class);
+        // $this->call(CategoryTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
     }
 }

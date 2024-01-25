@@ -65,13 +65,41 @@ check the recordid it take more time
 3. php artisan make:model AdminsRole
 
 
+------ Category module-
+1.php artisan make:migration create_categories_table
+2.edit
+3. php artisan migrate
+4.php artisan make:model Category
+5.php artisan make:controller Admin/CategoryController
 
+for make some dumy category by seeder to type
+6. php artisan make:seeder CategoryTableSeeder
+	go to CategoryTableSeeder:use the Category model->insert some record -> insert into database
+7. this is the seeder to update the database seeder to seed in to database
 
+8. Run the DB:seed
+// if this run privous then it will not work , first comment out in database seeder then run
+____________
 
+Products
+1.php artisan make:migration create_products_table
+2.phhp artisan migrate
+3.php artisan make:seeder ProductsTableSeeder
+4.Php artisan make:model Product
 
+make product in table seeder
+5.php artisan DB:seeder
+6. if refresh
+	(php artisan make:migration update_roducts_table
+	then code it up and down both
+	THEN migrate it)
 
-
-
+If i missed some record in seeder, and i want to insert it then:
+	1.php artisan make:migration update_products_table
+	then insert code:-
+	then change the Dataseeder
+	then php artisan migrate
+	then php artisan DB:seed
 
 
 
