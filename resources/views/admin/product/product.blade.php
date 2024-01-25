@@ -29,8 +29,8 @@
                             <div class="card-header">
                                 <h3 class="card-title">Products Page</h3>
                                 <a style="max-width: 150px;float: right;display: inline-block"
-                                    href="{{ url('/admin/add-edit-category') }}" class="btn btn-block btn-primary">Add
-                                    Category</a>
+                                    href="{{ url('/admin/add-edit-products') }}" class="btn btn-block btn-primary">Add
+                                    New Product</a>
 
                             </div>
                             <!-- /.card-header -->
@@ -62,26 +62,27 @@
 
                                                 <td>
                                                     @if ($key['status'] == 1)
-                                                        <a class="updateCategoriesStatus"
-                                                            id="product-{{ $key['id'] }}"product_id="{{ $key['id'] }}"
-                                                            page_id="{{ $key['id'] }}" href="javascript:void(0)">
+                                                        <a class="UpdateproductStatus" id="product-{{ $key['id'] }}"
+                                                            product_id="{{ $key['id'] }}" page_id="{{ $key['id'] }}"
+                                                            href="javascript:void(0)">
                                                             <i class="fas fa-toggle-on" status="Active"></i>
                                                         </a>
                                                     @else
-                                                        <a class="updateCategoriesStatus"
-                                                            id="product-{{ $key['id'] }}"product_id="{{ $key['id'] }}"
-                                                            page_id="{{ $key['id'] }}" style="color: gray"
-                                                            href="javascript:void(0)">
+                                                        <a class="UpdateproductStatus" id="product-{{ $key['id'] }}"
+                                                            product_id="{{ $key['id'] }}" page_id="{{ $key['id'] }}"
+                                                            style="color: gray" href="javascript:void(0)">
                                                             <i class="fas fa-toggle-off" status="Inactive"></i>
                                                         </a>
                                                     @endif
+
                                                     &nbsp; &nbsp;
-                                                    <a style='color: #3fed3;' href="">
-                                                        {{-- {{ route('add-edit-product', ['id' => $key['id']]) }} --}}
+                                                    <a style='color: rgb(238, 255, 0);'
+                                                        href="{{ route('add-edit-products', ['id' => $key['id']]) }}">
+
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     &nbsp; &nbsp;
-                                                    <a style='color: red;' class="confirmedDeleteCategory"
+                                                    <a style='color: rgb(253, 43, 43);' class="confirmedDeleteProduct"
                                                         href="javascript:void(0)" record="product"
                                                         recordid="{{ $key['id'] }}">
                                                         <i class="fas fa-trash"></i>

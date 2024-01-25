@@ -123,7 +123,7 @@
                                                 <input type="checkbox" id="is_parent_category" name="is_parent_category"
                                                     @if ($categoryEA['parent_id'] == 0 || old('is_parent_category') == 1) checked @endif>
                                             </div>
-                                            @if ($x)
+
                                                 <div class="form-group" id="parentCategorySelector"
                                                     @if ($categoryEA['parent_id'] == 0 || old('is_parent_category') == 1) style="display: none;" @endif>
 
@@ -149,7 +149,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                            @endif
+
 
                                             <div class="form-group">
                                                 <label for="image">Category Image</label>

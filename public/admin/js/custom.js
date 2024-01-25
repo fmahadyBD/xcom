@@ -223,6 +223,36 @@ $(document).ready(function () {
             },
         });
     });
+    // update the products status
+    $(document).on("click", ".UpdateproductStatus", function () {
+        var status = $(this).children("i").attr("status");
+        var product_id = $(this).attr("product_id");
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            type: "post",
+            url: "/admin/update-products-status",
+            data: { status: status, product_id: product_id },
+            success: function (resp) {
+                // Handle success response
+                if (resp["status"] == 0) {
+                    $("#product-" + product_id).html(
+                        "<i class='fas fa-toggle-off' style='color:grey' status='Inactive'></i>"
+                    );
+                } else if (resp["status"] == 1) {
+                    $("#product-" + product_id).html(
+                        "<i class='fas fa-toggle-on' style='color: blue' status='Active'></i>"
+                    );
+                }
+            },
+            error: function () {
+                alert("Error");
+            },
+        });
+    });
+
 
     // simple jequree the delete the cms page
     $(document).on("click", ".confirmedDelete", function () {
@@ -295,5 +325,41 @@ $(document).ready(function () {
         });
     });
 
+    //delete Product
+    $(document).on("click", ".confirmedDeleteProduct", function () {
 
+        var record = $(this).attr("record");
+        var recordid = $(this).attr("recordid");
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success",
+                });
+                window.location.href =
+                    "/admin/delete-" + record + "/" + recordid;
+            }
+        });
+    });
+
+
+});
+
+$(document).ready(function() {
+    // Handle radio button clicks
+    $('.form-check-input').click(function() {
+        // If the radio button is already checked, uncheck it
+        if ($(this).prop('checked')) {
+            $(this).prop('checked', false);
+        }
+    });
 });
