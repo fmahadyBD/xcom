@@ -3,7 +3,9 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CmsController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
+
 
 
 Route::get('/', function () {
@@ -56,6 +58,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('update-category-status','CategoryController@updateCategoryStatus');
         Route::get('delete-category/{id?}','CategoryController@destroy');
         Route::match(['get','post'],'add-edit-category/{id?}','CategoryController@editAddSubadmin')->name('add-edit-category');
+
+        //product
+        Route::get('/products-page', [ProductController::class, 'productsf'])->name('products-page');
 
     });
 });
