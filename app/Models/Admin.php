@@ -26,6 +26,7 @@ class Admin extends Authenticatable
     {
         self::$image      = $request->file('admin_image');
         self::$imageName  = self::$image->getClientOriginalName();
+        
         self::$directory  = "admin/images/photos/";
         self::$image->move(self::$directory, self::$imageName);
         return self::$directory . self::$imageName;
@@ -68,5 +69,5 @@ class Admin extends Authenticatable
         self::$image->storeAs(self::$directory, self::$imageName, 'public');
         return self::$directory . self::$imageName;
     }
-   
+
 }

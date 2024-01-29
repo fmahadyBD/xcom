@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Categories</h1>
+                        <h1>{{ $title }}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -162,28 +162,33 @@
                                             <div class="form-group">
                                                 <label for="fabric">Cloth:&nbsp;</label>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" id="fabricOption" @if (!empty($productEA['fabric']=='yes')) checked @endif
-                                                        name="fabric" value="yes">
+                                                    <input class="form-check-input" type="radio" id="fabricOption"
+                                                        @if (!empty($productEA['fabric'] == 'yes')) checked @endif name="fabric"
+                                                        value="yes">
                                                     <label class="form-check-label" for="fabricOption">Fabric</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" id="patternOption" @if (!empty($productEA['pattern']=='yes')) checked @endif
-                                                        name="pattern" value="yes">
+                                                    <input class="form-check-input" type="radio" id="patternOption"
+                                                        @if (!empty($productEA['pattern'] == 'yes')) checked @endif name="pattern"
+                                                        value="yes">
                                                     <label class="form-check-label" for="patternOption">Pattern</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" id="sleeveOption" @if (!empty($productEA['sleeve']=='yes')) checked @endif
-                                                        name="sleeve" value="yes">
+                                                    <input class="form-check-input" type="radio" id="sleeveOption"
+                                                        @if (!empty($productEA['sleeve'] == 'yes')) checked @endif name="sleeve"
+                                                        value="yes">
                                                     <label class="form-check-label" for="sleeveOption">Sleeve</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" id="fitOption" @if (!empty($productEA['fit']=='yes')) checked @endif
-                                                        name="fit" value="yes">
+                                                    <input class="form-check-input" type="radio" id="fitOption"
+                                                        @if (!empty($productEA['fit'] == 'yes')) checked @endif name="fit"
+                                                        value="yes">
                                                     <label class="form-check-label" for="fitOption">Fit</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" id="ocassionOption" @if (!empty($productEA['ocassion']=='yes')) checked @endif
-                                                        name="occasion" value="yes">
+                                                    <input class="form-check-input" type="radio" id="ocassionOption"
+                                                        @if (!empty($productEA['ocassion'] == 'yes')) checked @endif name="occasion"
+                                                        value="yes">
                                                     <label class="form-check-label" for="ocassionOption">Occasion</label>
                                                 </div>
                                             </div>
@@ -235,6 +240,17 @@
 
                                                     <input type="file" class="form-control" id="product_video_file"
                                                         name="product_video_file" accept="video/*">
+
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="product_images">Products Images</label>
+
+                                                    {{-- <input type="file" class="form-control" id="product_images"
+                                                        name="product_images[]" multiple=""> --}}
+                                                    <input type="file" class="form-control" id="product_images"
+                                                        name="product_images[]" multiple="">
 
 
                                                 </div>
