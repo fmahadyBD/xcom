@@ -13,7 +13,7 @@ return new class extends Migration
     {
     // for update the products table.
     Schema::table('products',function($table){
-        $table->string('product_weight')->after('product_name');
+        $table->string('product_weight')->after('product_name')->nullable();
     });
     }
 
@@ -22,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products',function($table){
-            $table->$table->dropColumn('product_weight');
-        });
+        // Schema::table('products',function($table){
+        //     $table->$table->dropColumn('product_weight');
+        // });
     }
 };
